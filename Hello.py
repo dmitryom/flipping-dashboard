@@ -28,9 +28,6 @@ def run():
 
     st.sidebar.success("Select a demo above.")
 
-    st.markdown(
-
-    )
 
 
 if __name__ == "__main__":
