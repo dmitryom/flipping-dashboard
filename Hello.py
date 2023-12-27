@@ -51,6 +51,7 @@ selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Характеристики квартиры {selected_flat_id}')
 st.write(selected_flat)
 
+st.subheader('Анализ стоимости квартиры')
 # График цен за квадратный метр
 chart, ax = plt.subplots(figsize=(8, 6))
 
@@ -84,7 +85,7 @@ ax.legend()
 st.pyplot(chart)
 
 # Карта конкурентов в радиусе 1500 метров
-st.subheader('Карта с маркерами для всех квартир в радиусе 1500 метров')
+st.subheader('Карта конкурентов в радиусе 1500 метров')
 m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
 
 # Перебор всех квартир и добавление маркеров в радиусе 1500 метров
