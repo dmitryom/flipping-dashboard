@@ -143,7 +143,7 @@ competitors_data = competitors_data[competitors_data['Distance (meters)'] <= 150
 competitors_data.loc[competitors_data['id'] == selected_flat_id, 'Selected'] = 'Selected'
 
 # Отображение таблицы
-st.table(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
+st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
 
 # Карта конкурентов в радиусе 1500 метров
 st.subheader('Карта конкурентов в радиусе 1500 метров')
