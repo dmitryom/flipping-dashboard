@@ -35,10 +35,10 @@ print(data.columns)
 st.title('Анализ флиппинг проекта')
 
 # Сайдбар для выбора квартиры
-selected_flat_id = st.sidebar.selectbox('Выберите квартиру', data['id'])
+selected_flat_id = st.sidebar.selectbox('Выберите квартиру', data['cian_id'])
 
 # Отображение характеристик выбранной квартиры
-selected_flat = data[data['id'] == selected_flat_id].squeeze()
+selected_flat = data[data['cian_id'] == selected_flat_id].squeeze()
 st.subheader(f'Характеристики квартиры {selected_flat_id}')
 st.write(selected_flat)
 
