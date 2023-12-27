@@ -61,7 +61,7 @@ for index, flat in filtered_data.iterrows():
     # Вычисление расстояния между квартирами в метрах
     distance = geodesic(flat_location, selected_location).meters
     
-    if distance <= 200:
+    if distance <= 1500:
         # Определение цвета маркера для выбранной квартиры
         marker_color = 'red' if flat['id'] == selected_flat_id else 'blue'
         
