@@ -55,7 +55,7 @@ for index, flat in data.iterrows():
                   icon=folium.Icon(color='blue')).add_to(m)
 
 # Отображение карты
-folium_static(m)
+st.write(m._repr_html_(), unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
