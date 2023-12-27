@@ -32,7 +32,7 @@ data = load_data()
 print(data.columns)
 
 # Заголовок приложения
-st.title('Real Estate Explorer')
+st.title('Анализ флиппинг проекта')
 
 # Сайдбар для выбора квартиры
 selected_flat_id = st.sidebar.selectbox('Выберите квартиру', data['id'])
@@ -42,8 +42,8 @@ selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Характеристики квартиры {selected_flat_id}')
 st.write(selected_flat)
 
-# Отображение карты с маркерами для всех квартир
-st.subheader('Карта с маркерами для всех квартир')
+# Карта конкурентов
+st.subheader('Карта с маркерами для всех квартир в радиусе')
 m = folium.Map(location=[55.75, 37.61], zoom_start=10)  # Начальные координаты карты
 for index, flat in data.iterrows():
     folium.Marker([flat['lat'], flat['lon']],
