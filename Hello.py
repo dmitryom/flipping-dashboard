@@ -22,12 +22,6 @@ from streamlit_folium import st_folium
 LOGGER = get_logger(__name__)
 
 
-def run():
-    st.set_page_config(
-        page_title="Hello",
-        page_icon="👋",
-    )
-
 # Загрузка данных из CSV
 @st.cache
 def load_data():
