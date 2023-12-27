@@ -29,7 +29,7 @@ def run():
 # Загрузка данных из CSV
 @st.cache
 def load_data():
-    data = pd.read_csv('flats_with_preds.csv')  # Замените 'your_data.csv' на имя вашего файла CSV
+    data = pd.read_csv('flats_with_predict.csv')  # Замените 'your_data.csv' на имя вашего файла CSV
     return data
 
 data = load_data()
