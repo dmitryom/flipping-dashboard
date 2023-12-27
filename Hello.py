@@ -94,7 +94,7 @@ ax.fill_betweenx([q1_price_m2, q3_price_m2], -2, 1, alpha=0.2, color='gray')
 ax.set_xlim(-1, 1)
 
 # Отображение графика
-ax.set_ylabel('Стоимость кваритры за квадратный метр (R$)')
+ax.set_ylabel('Стоимость квартиры за квадратный метр (R$)')
 ax.set_title('Стоимость выбранной квартиры за квадратный метр')
 ax.legend()
 st.pyplot(chart)
