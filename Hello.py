@@ -135,6 +135,3 @@ for index, flat in competitors_data.iterrows():
 
 # Отображение карты
 folium_static(m)
-
-# Отображение карты
-folium_static(m)
