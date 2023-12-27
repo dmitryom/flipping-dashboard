@@ -78,6 +78,21 @@ sns.stripplot(
     label=f'Selected Flat {selected_flat_id}'
 )
 
+# Оформление графика
+avg_price_m2 = data['price_sq'].median()
+q1_price_m2 = data['price_sq'].quantile(0.25)
+q3_price_m2 = data['price_sq'].quantile(0.75)
+
+ax.axhline(y=avg_price_m2, color='#DA70D6', linestyle='--', lw=0.75)
+ax.axhline(y=q1_price_m2, color='white', linestyle='--', lw=0.75)
+ax.axhline(y=q3_price_m2, color='white', linestyle='--', lw=0.75)
+
+ax.text(1.15, q1_price_m2, 'Q1', ha='center', va='center', color='white', fontsize=8, fontweight='bold')
+ax.text(1.35, avg_price_m2, 'Median', ha='center', va='center', color='#DA70D6', fontsize=8, fontweight='bold')
+ax.text(1.15, q3_price_m2, 'Q3', ha='center', va='center', color='white', fontsize=8, fontweight='bold')
+ax.fill_betweenx([q1_price_m2, q3_price_m2], -2, 1, alpha=0.2, color='gray')
+ax.set_xlim(-1, 1)
+
 # Отображение графика
 ax.set_ylabel('Стоимость кваритры за квадратный метр (R$)')
 ax.set_title('Стоимость выбранной квартиры за квадратный метр')
