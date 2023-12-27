@@ -51,6 +51,38 @@ selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Характеристики квартиры {selected_flat_id}')
 st.write(selected_flat)
 
+# График цен за квадратный метр
+chart, ax = plt.subplots(figsize=(8, 6))
+
+# Фоновый график для всех квартир
+sns.stripplot(
+    data=data,
+    y='price_sq',
+    color='white',
+    jitter=0.3,
+    size=8,
+    linewidth=1,
+    edgecolor='gainsboro',
+    alpha=0.7
+)
+
+# Выделение выбранной квартиры
+sns.stripplot(
+    data=data[data['id'] == selected_flat_id],
+    y='price_sq',
+    color='red',
+    size=12,
+    linewidth=1,
+    edgecolor='black',
+    label=f'Selected Flat {selected_flat_id}'
+)
+
+# Отображение графика
+ax.set_ylabel('Price per Square Meter (R$)')
+ax.set_title('Prices per Square Meter for Different Flats')
+ax.legend()
+st.pyplot(chart)
+
 # Карта конкурентов в радиусе 1500 метров
 st.subheader('Карта с маркерами для всех квартир в радиусе 1500 метров')
 m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
