@@ -15,6 +15,7 @@
 import streamlit as st
 from streamlit.logger import get_logger
 import pandas as pd
+import folium
 
 LOGGER = get_logger(__name__)
 
@@ -25,92 +26,36 @@ def run():
         page_icon="👋",
     )
 
+# Загрузка данных из CSV
+@st.cache
+def load_data():
+    data = pd.read_csv('flats_with_preds.csv')  # Замените 'your_data.csv' на имя вашего файла CSV
+    return data
 
-def display_info(info_dict, header):
-    st.header(header)
-    df = pd.DataFrame(info_dict.items(), columns=["Параметр", "Значение"])
-    st.table(df)
+data = load_data()
 
-def calculate_taxes_and_profit(net_profit, renovation_cost, other_expenses):
-    taxes_13_percent = net_profit * 0.13
-    taxes_6_percent = net_profit * 0.06
-    net_profit_after_taxes = net_profit - taxes_13_percent - taxes_6_percent
-    return taxes_13_percent, taxes_6_percent, net_profit_after_taxes
+# Заголовок приложения
+st.title('Real Estate Explorer')
 
-def calculate_location_score(location_ratings):
-    # Пример: Среднее арифметическое оценок по разным характеристикам
-    return sum(location_ratings.values()) / len(location_ratings)
+# Сайдбар для выбора квартиры
+selected_flat_id = st.sidebar.selectbox('Выберите квартиру', data['id'])
 
-def main():
-    st.title("Информация о проекте недвижимости")
+# Отображение характеристик выбранной квартиры
+selected_flat = data[data['id'] == selected_flat_id].squeeze()
+st.subheader(f'Характеристики квартиры {selected_flat_id}')
+st.write(selected_flat)
 
-    # Раздел 1: Общая информация
-    general_info = {
-        "Адрес": "Улица Примерная, д. 123, кв. 456",
-        "Дата публикации": "01.01.2023",
-        "Количество просмотров общее": 1000,
-        "Количество просмотров за день": 50,
-        "Цена покупки": 2000000,
-        "Цена продажи": 2200000,
-        "Цена за квм": 40000,
-        "Продавец": "Иванов Иван",
-        "Время до метро": "10 минут",
-        "Расстояние до метро": "500 метров",
-    }
-    display_info(general_info, "1. Общая информация")
+# Отображение карты с маркерами для всех квартир
+st.subheader('Карта с маркерами для всех квартир')
+m = folium.Map(location=[55.75, 37.61], zoom_start=10)  # Начальные координаты карты
+for index, flat in data.iterrows():
+    folium.Marker([flat['lat'], flat['lon']],
+                  popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
+                  icon=folium.Icon(color='blue')).add_to(m)
 
-    # Раздел 2: Информация о квартире
-    flat_info = {
-        "Состояние": "Хорошее",
-        "Комнаты": 2,
-        "Общая площадь": 60,
-        "Кухня": 10,
-        "Балкон": "Есть",
-        "Этаж": 5,
-        "Серия дома": "Кирпичная",
-        "Тип дома": "Многоквартирный",
-        "Год постройки": 2000,
-        "Капитальный ремонт": "Да",
-    }
-    display_info(flat_info, "2. Информация о квартире")
+# Отображение карты
+folium_static(m)
 
-    # Раздел 3: Смета проекта
-    st.header("3. Смета проекта")
-    renovation_cost_per_sqm = st.number_input("Стоимость ремонта за квадратный метр", min_value=0, value=1000)
-    total_area = flat_info["Общая площадь"]
-    renovation_cost = total_area * renovation_cost_per_sqm
-    other_expenses = st.number_input("Прочие расходы", min_value=0)
-    deal_price = general_info["Цена продажи"]
-    net_profit = deal_price - (general_info["Цена покупки"] - st.number_input("Торг", min_value=0)) - renovation_cost - other_expenses
-    taxes_13_percent, taxes_6_percent, net_profit_after_taxes = calculate_taxes_and_profit(net_profit, renovation_cost, other_expenses)
-
-    # Вывод результатов
-    st.subheader("Смета проекта")
-    st.write(f"Стоимость ремонта: {renovation_cost}")
-    st.write(f"Прочие расходы: {other_expenses}")
-    st.write(f"Прибыль до налогов: {net_profit}")
-    st.write(f"Налоги при ставке 13%: {taxes_13_percent}")
-    st.write(f"Налоги при ставке 6%: {taxes_6_percent}")
-    st.write(f"Чистая прибыль: {net_profit_after_taxes}")
-
-    # Раздел 4: Доходность проекта
-    st.header("4. Доходность проекта")
-    roi = (net_profit_after_taxes / (renovation_cost + other_expenses)) * 100
-    irr = (net_profit_after_taxes / (renovation_cost + other_expenses)) * (12 / st.number_input("Срок проекта (в месяцах)", min_value=1)) * 100
-    gap = general_info["Цена продажи"] / general_info["Цена покупки"]
-    st.write(f"ROI (рентабельность инвестиций): {roi}%")
-    st.write(f"IRR (внутренняя норма доходности): {irr}%")
-    st.write(f"GAP (На сколько ремонта увеличит стоимость квартиры): {gap}")
-
-    # Раздел 5: Оценка локации
-    st.header("5. Оценка локации")
-    location_ratings = {
-        "Близость к общественному транспорту": st.slider("Оценка близости", min_value=1, max_value=10, value=5),
-        "Инфраструктура района": st.slider("Оценка инфраструктуры", min_value=1, max_value=10, value=5),
-        # Добавьте дополнительные параметры для оценки локации
-    }
-    location_score = calculate_location_score(location_ratings)
-    st.write(f"Общая оценка локации: {location_score}")
 
 if __name__ == "__main__":
     main()
