@@ -18,6 +18,7 @@ import pandas as pd
 import folium
 from streamlit_folium import folium_static
 from streamlit_folium import st_folium
+from geopy.distance import geodesic
 
 LOGGER = get_logger(__name__)
 
