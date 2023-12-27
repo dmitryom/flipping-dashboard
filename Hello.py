@@ -16,7 +16,6 @@ import streamlit as st
 from streamlit.logger import get_logger
 import pandas as pd
 import folium
-import folium_static
 
 LOGGER = get_logger(__name__)
 
