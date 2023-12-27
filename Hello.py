@@ -35,7 +35,7 @@ data = load_data()
 print(data.columns)
 
 # Заголовок приложения
-st.title('Анализ флиппинг проекта')
+st.title('Расчет флиппинг-проекта')
 
 # Сайдбар для выбора города
 selected_city = st.sidebar.selectbox('Выберите город', data['city'].unique())
@@ -50,6 +50,33 @@ selected_flat_id = st.sidebar.selectbox('Выберите квартиру', fil
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Характеристики квартиры {selected_flat_id}')
 st.write(selected_flat)
+
+# Флиппинг-проект
+st.markdown("---")
+
+# Допущения
+renovation_percentage = st.slider('Процент затрат на ремонт:', 5, 50, 10)
+agent_commission_percentage = st.slider('Процент комиссии агента:', 1, 10, 5)
+
+# Расчет затрат на ремонт
+renovation_cost = selected_flat['area'] * renovation_percentage
+
+# Ожидаемая стоимость продажи (может быть заменена на реальные данные)
+expected_sale_price = selected_flat['predicted_price']
+
+# Расчет комиссии агента
+agent_commission = (expected_sale_price - renovation_cost) * (agent_commission_percentage / 100)
+
+# Расчет общих затрат и прибыли
+total_expenses = renovation_cost + agent_commission
+profit = expected_sale_price - total_expenses
+
+# Отображение результатов
+st.write(f'Прогнозируемая стоимость продажи: {expected_sale_price} руб')
+st.write(f'Затраты на ремонт: {renovation_cost} руб')
+st.write(f'Комиссия агента: {agent_commission} руб')
+st.write(f'Общие затраты: {total_expenses} руб')
+st.write(f'Прибыль: {profit} руб')
 
 st.subheader('Анализ стоимости квартиры')
 # График цен за квадратный метр
