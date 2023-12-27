@@ -25,7 +25,7 @@ LOGGER = get_logger(__name__)
 # Загрузка данных из CSV___
 @st.cache
 def load_data():
-    data = pd.read_csv('flats_with_predict.csv')  # Замените 'your_data.csv' на имя вашего файла CSV
+    data = pd.read_csv('data_with_predict.csv')  # Замените 'your_data.csv' на имя вашего файла CSV
     return data
 
 data = load_data()
