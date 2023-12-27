@@ -4,3 +4,7 @@ pandas
 pydeck
 streamlit
 folium
+jinja2
+branca
+geopandas
+streamlit_folium
