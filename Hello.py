@@ -19,6 +19,8 @@ import folium
 from streamlit_folium import folium_static
 from streamlit_folium import st_folium
 from geopy.distance import geodesic
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 LOGGER = get_logger(__name__)
 
