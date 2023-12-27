@@ -25,7 +25,7 @@ LOGGER = get_logger(__name__)
 # Загрузка данных из CSV___
 @st.cache
 def load_data():
-    data = pd.read_csv('data_with_predict.csv')  # Замените 'your_data.csv' на имя вашего файла CSV
+    data = pd.read_csv('flats_with_predict.csv')  # Замените 'your_data.csv' на имя вашего файла CSV
     return data
 
 data = load_data()
@@ -34,11 +34,17 @@ print(data.columns)
 # Заголовок приложения
 st.title('Анализ флиппинг проекта')
 
-# Сайдбар для выбора квартиры
-selected_flat_id = st.sidebar.selectbox('Выберите квартиру', data['cian_id'])
+# Сайдбар для выбора города
+selected_city = st.sidebar.selectbox('Выберите город', data['city'].unique())
+
+# Фильтрация данных по выбранному городу
+filtered_data = data[data['city'] == selected_city]
+
+# Сайдбар для выбора квартиры из отфильтрованных данных
+selected_flat_id = st.sidebar.selectbox('Выберите квартиру', filtered_data['id'])
 
 # Отображение характеристик выбранной квартиры
-selected_flat = data[data['cian_id'] == selected_flat_id].squeeze()
+selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Характеристики квартиры {selected_flat_id}')
 st.write(selected_flat)
 
