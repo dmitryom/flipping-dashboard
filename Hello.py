@@ -120,6 +120,9 @@ for index, flat in filtered_data.iterrows():
                       tooltip=f"{flat['city']}, {flat['price_sq']} руб/м²",
                       icon=folium.Icon(color=marker_color),
                       auto_open=True).add_to(m)
+# Отображение таблицы с конкурентами
+st.subheader('Таблица конкурентов')
+st.dataframe(filtered_data)
 
 # Отображение карты
 folium_static(m)
