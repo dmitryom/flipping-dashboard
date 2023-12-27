@@ -79,8 +79,8 @@ sns.stripplot(
 )
 
 # Отображение графика
-ax.set_ylabel('Price per Square Meter (R$)')
-ax.set_title('Prices per Square Meter for Different Flats')
+ax.set_ylabel('Стоимость кваритры за квадратный метр (R$)')
+ax.set_title('Стоимость выбранной квартиры за квадратный метр')
 ax.legend()
 st.pyplot(chart)
 
