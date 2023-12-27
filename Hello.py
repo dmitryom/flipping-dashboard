@@ -99,30 +99,42 @@ ax.set_title('Стоимость выбранной квартиры за ква
 ax.legend()
 st.pyplot(chart)
 
+# Разделение между графиком и таблицей
+st.markdown("---")
+
+# Таблица конкурентов в радиусе 1500 метров
+st.subheader('Таблица конкурентов в радиусе 1500 метров')
+# Фильтрация данных для отображения только конкурентов в радиусе 1500 метров
+competitors_data = filtered_data.copy()
+competitors_data['Distance (meters)'] = competitors_data.apply(
+    lambda row: geodesic((row['lat'], row['lon']), (selected_flat['lat'], selected_flat['lon'])).meters,
+    axis=1
+)
+competitors_data = competitors_data[competitors_data['Distance (meters)'] <= 1500]
+
+# Выделение выбранной квартиры в таблице
+competitors_data.loc[competitors_data['id'] == selected_flat_id, 'Selected'] = 'Selected'
+
+# Отображение таблицы
+st.table(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
+
 # Карта конкурентов в радиусе 1500 метров
 st.subheader('Карта конкурентов в радиусе 1500 метров')
 m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
 
 # Перебор всех квартир и добавление маркеров в радиусе 1500 метров
-for index, flat in filtered_data.iterrows():
-    flat_location = (flat['lat'], flat['lon'])
-    selected_location = (selected_flat['lat'], selected_flat['lon'])
+for index, flat in competitors_data.iterrows():
+    # Определение цвета маркера для выбранной квартиры
+    marker_color = 'red' if flat['id'] == selected_flat_id else 'blue'
     
-    # Вычисление расстояния между квартирами в метрах
-    distance = geodesic(flat_location, selected_location).meters
-    
-    if distance <= 1500:
-        # Определение цвета маркера для выбранной квартиры
-        marker_color = 'red' if flat['id'] == selected_flat_id else 'blue'
-        
-        folium.Marker([flat['lat'], flat['lon']],
-                      popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
-                      tooltip=f"{flat['city']}, {flat['price_sq']} руб/м²",
-                      icon=folium.Icon(color=marker_color),
-                      auto_open=True).add_to(m)
-# Отображение таблицы с конкурентами
-st.subheader('Таблица конкурентов')
-st.dataframe(filtered_data)
+    folium.Marker([flat['lat'], flat['lon']],
+                  popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
+                  tooltip=f"{flat['city']}, {flat['price_sq']} руб/м²",
+                  icon=folium.Icon(color=marker_color),
+                  auto_open=True).add_to(m)
+
+# Отображение карты
+folium_static(m)
 
 # Отображение карты
 folium_static(m)
