@@ -49,13 +49,27 @@ selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Характеристики квартиры {selected_flat_id}')
 st.write(selected_flat)
 
-# Карта конкурентов
-st.subheader('Карта с маркерами для всех квартир в радиусе')
-m = folium.Map(location=[55.75, 37.61], zoom_start=10)  # Начальные координаты карты
-for index, flat in data.iterrows():
-    folium.Marker([flat['lat'], flat['lon']],
-                  popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
-                  icon=folium.Icon(color='blue')).add_to(m)
+# Карта конкурентов в радиусе 1500 метров
+st.subheader('Карта с маркерами для всех квартир в радиусе 1500 метров')
+m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
+
+# Перебор всех квартир и добавление маркеров в радиусе 1500 метров
+for index, flat in filtered_data.iterrows():
+    flat_location = (flat['lat'], flat['lon'])
+    selected_location = (selected_flat['lat'], selected_flat['lon'])
+    
+    # Вычисление расстояния между квартирами в метрах
+    distance = geodesic(flat_location, selected_location).meters
+    
+    if distance <= 1500:
+        # Определение цвета маркера для выбранной квартиры
+        marker_color = 'red' if flat['id'] == selected_flat_id else 'blue'
+        
+        folium.Marker([flat['lat'], flat['lon']],
+                      popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
+                      tooltip=f"{flat['city']}, {flat['price_sq']} руб/м²",
+                      icon=folium.Icon(color=marker_color),
+                      auto_open=True).add_to(m)
 
 # Отображение карты
 folium_static(m)
