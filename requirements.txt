@@ -9,3 +9,5 @@ branca
 geopandas
 streamlit_folium
 geopy
+matplotlib
+seaborn
