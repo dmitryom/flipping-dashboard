@@ -21,7 +21,7 @@ from streamlit_folium import st_folium
 
 LOGGER = get_logger(__name__)
 
-def run():
+
 # Загрузка данных из CSV
 @st.cache
 def load_data():
@@ -52,6 +52,3 @@ for index, flat in data.iterrows():
 
 # Отображение карты
 folium_static(m)
-
-if __name__ == "__main__":
-    run()
