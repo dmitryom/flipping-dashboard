@@ -34,6 +34,7 @@ def load_data():
 
 data = load_data()
 print(data.columns)
+
 # Заголовок приложения
 st.title('Real Estate Explorer')
 
