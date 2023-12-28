@@ -62,12 +62,6 @@ col3.metric("Индекс доступности инфраструктуры", 
 col4.metric("Тренд", "4%", "100%")
 
 
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("ROI", "20%", "4%", font_size=18)
-col2.metric("Индекс транспортной доступности", "5", "10", font_size=18) 
-col3.metric("Индекс доступности инфраструктуры", "6", "10", font_size=18)
-col4.metric("Тренд", "4%", "100%", font_size=18)
-
 # Отображение характеристик выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Основные характеристики квартиры {selected_flat_id}')
