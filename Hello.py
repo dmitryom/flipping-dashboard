@@ -68,7 +68,7 @@ expected_sale_price = selected_flat['predicted_price']
 agent_commission = (expected_sale_price - renovation_cost) * (agent_commission_cost / 100)
 
 # Расчет общих затрат и прибыли
-total_expenses = price_sq + renovation_cost + agent_commission
+total_expenses = selected_flat['price_sq'] + renovation_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
 st.subheader(f'Цена входа: selected_flat['price_sq'] руб')
