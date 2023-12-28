@@ -35,7 +35,7 @@ data = load_data()
 print(data.columns)
 
 # Заголовок приложения
-st.title('Расчет' #флиппинг-проекта)
+st.title('Расчет проекта')
 
 # Сайдбар для выбора города
 selected_city = st.sidebar.selectbox('Выберите город', data['city'].unique())
