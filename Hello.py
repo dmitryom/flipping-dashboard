@@ -54,6 +54,23 @@ selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Объект: {selected_flat["floor"]} ком.кв., {selected_flat["city"]}, {selected_flat["street"]}, {selected_flat["address"]}, Площадь: {selected_flat["area"]}')
 st.write(f'Метро: {selected_flat["all_data.geo.undergrounds[0].name"]},{selected_flat["all_data.geo.undergrounds[0].time"]} мин.')
 
+# Допущения
+renovation_cost_sq = st.number_input('Стоимость ремонта за квадратный метр:', )
+agent_commission_cost = st.number_input('Стоимость комиссии агента:', )
+
+# Расчет затрат на ремонт
+renovation_cost = selected_flat['area'] * renovation_cost_sq
+
+# Ожидаемая стоимость продажи (может быть заменена на реальные данные)
+expected_sale_price = selected_flat['predicted_price']
+
+# Расчет комиссии агента
+agent_commission = (expected_sale_price - renovation_cost) * (agent_commission_cost / 100)
+
+# Расчет общих затрат и прибыли
+total_expenses = renovation_cost + agent_commission
+profit = expected_sale_price - total_expenses
+
 st.subheader(f'Цена входа: {expected_sale_price} руб')
 st.subheader(f'Цена выхода потенциальная: {expected_sale_price} руб')
 
@@ -73,23 +90,7 @@ st.write(selected_flat)
 # Флиппинг-проект
 st.markdown("---")
 
-# Допущения
-renovation_cost = st.number_input('Стоимость ремонта за квадратный метр:', )
-agent_commission_cost = st.number_input('Стоимость комиссии:', )
-
-# Расчет затрат на ремонт
-renovation_cost = selected_flat['area'] * renovation_cost
-
-# Ожидаемая стоимость продажи (может быть заменена на реальные данные)
-expected_sale_price = selected_flat['predicted_price']
-
-# Расчет комиссии агента
-agent_commission = (expected_sale_price - renovation_cost) * (agent_commission_cost / 100)
-
-# Расчет общих затрат и прибыли
-total_expenses = renovation_cost + agent_commission
-profit = expected_sale_price - total_expenses
-
+st.subheader(f'Финансовые показатели')
 # Отображение результатов
 st.subheader(f'Цена входа: {expected_sale_price} руб')
 st.subheader(f'Цена выхода потенциальная: {expected_sale_price} руб')
