@@ -55,9 +55,9 @@ st.subheader(f'Объект: {selected_flat["floor"]} ком.кв., {selected_fl
 st.write(f'Метро: {selected_flat["all_data.geo.undergrounds[0].name"]},{selected_flat["all_data.geo.undergrounds[0].time"]} мин.')
 
 col1, col2, col3, col4 = st.columns(4)
-col1.subheader("ROI")
-col1.subheader("ROI","20%", "4%")
-col2.subheader("Индекс транспортной доступности", "5", "10")
+
+col1.metric("ROI","20%", "4%")
+col2.metric("Индекс транспортной доступности", "5", "10")
 col3.metric("Индекс доступности инфраструктуры", "6", "10")
 col4.metric("Тренд", "4%", "100%")
 
