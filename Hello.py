@@ -35,9 +35,9 @@ data = load_data()
 print(data.columns)
 
 # Установка параметров страницы для отображения во весь экран
-st.set_page_config(page_title='Расчет проекта', layout='wide')
+st.set_page_config(layout='wide')
 # Заголовок приложения
-#st.title('Расчет проекта')
+st.title('Расчет проекта')
 
 # Сайдбар для выбора города
 selected_city = st.sidebar.selectbox('Выберите город', data['city'].unique())
