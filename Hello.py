@@ -47,6 +47,7 @@ filtered_data = data[data['city'] == selected_city]
 selected_flat_id = st.sidebar.selectbox('Выберите квартиру', filtered_data['id'])
 
 # Вывод адреса и района выбранной квартиры
+selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Адрес и район выбранной квартиры {selected_flat_id}')
 st.write(f'Город: {selected_flat["city"]}')
 st.write(f'Улица: {selected_flat["street"]}')
