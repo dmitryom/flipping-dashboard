@@ -28,7 +28,7 @@ LOGGER = get_logger(__name__)
 # Загрузка данных из CSV___
 @st.cache
 def load_data():
-    data = pd.read_csv('flats_with_predict.csv')  # Замените 'your_data.csv' на имя вашего файла CSV
+    data = pd.read_csv('test_flats_data.csv')  # Замените 'your_data.csv' на имя вашего файла CSV
     return data
 
 data = load_data()
@@ -44,7 +44,7 @@ selected_city = st.sidebar.selectbox('Выберите город', data['city']
 filtered_data = data[data['city'] == selected_city]
 
 # Сайдбар для выбора квартиры из отфильтрованных данных
-selected_flat_id = st.sidebar.selectbox('Выберите квартиру', filtered_data['id'])
+selected_flat_id = st.sidebar.selectbox('Выберите квартиру', filtered_data['cian_id'])
 
 
 col1, col2, col3, col4 = st.columns(4)
@@ -56,7 +56,7 @@ col4.metric("Тренд", "4%", "100%")
 
 
 # Отображение характеристик выбранной квартиры
-selected_flat = data[data['id'] == selected_flat_id].squeeze()
+selected_flat = data[data['cian_id'] == selected_flat_id].squeeze()
 st.subheader(f'Основные характеристики квартиры {selected_flat_id}')
 st.write(selected_flat)
 
