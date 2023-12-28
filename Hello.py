@@ -52,7 +52,7 @@ st.subheader(f'Адрес и район выбранной квартиры {sel
 st.write(f'Город: {selected_flat["city"]}')
 st.write(f'Улица: {selected_flat["street"]}')
 st.write(f'Адрес: {selected_flat["address"]}')
-st.write(f'Район: {selected_flat["area"]}')
+st.write(f'Площадь: {selected_flat["area"]}')
 
 col1, col2, col3, col4 = st.columns(4)
 
