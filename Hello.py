@@ -54,12 +54,13 @@ selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Объект: {selected_flat["floor"]} ком.кв., {selected_flat["city"]}, {selected_flat["street"]}, {selected_flat["address"]}, Площадь: {selected_flat["area"]}')
 st.write(f'Метро: {selected_flat["all_data.geo.undergrounds[0].name"]},{selected_flat["all_data.geo.undergrounds[0].time"]} мин.')
 
+
 col1, col2, col3, col4 = st.columns(4)
 
-col1.metric("ROI", "20%", "4%")
-col2.metric("Индекс транспортной доступности", "5", "10")
-col3.metric("Индекс доступности инфраструктуры", "6", "10")
-col4.metric("Тренд", "4%", "100%")
+col1.metric("<h3>ROI</h3>", "20%", "4%")
+col2.metric("<h3>Индекс транспортной доступности</h3>", "5", "10")
+col3.metric("<h3>Индекс доступности инфраструктуры</h3>", "6", "10")
+col4.metric("<h3>Тренд</h3>", "4%", "100%")
 
 
 # Отображение характеристик выбранной квартиры
