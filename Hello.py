@@ -71,8 +71,8 @@ st.write(selected_flat)
 st.markdown("---")
 
 # Допущения
-renovation_cost = st.number_input(('Процент затрат на ремонт:', 5, 50, 10)
-agent_commission_cost = st.number_input(('Процент комиссии агента:', 1, 10, 5)
+renovation_cost = st.number_input('Процент затрат на ремонт:', 5, 50, 10)
+agent_commission_cost = st.number_input('Процент комиссии агента:', 1, 10, 5)
 
 # Расчет затрат на ремонт
 renovation_cost = selected_flat['area'] * renovation_percentage
