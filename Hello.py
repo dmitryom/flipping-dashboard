@@ -46,6 +46,11 @@ filtered_data = data[data['city'] == selected_city]
 # Сайдбар для выбора квартиры из отфильтрованных данных
 selected_flat_id = st.sidebar.selectbox('Выберите квартиру', filtered_data['cian_id'])
 
+st.subheader(f'Адрес и район выбранной квартиры {selected_flat_id}')
+st.write(f'Город: {selected_flat["city"]}')
+st.write(f'Улица: {selected_flat["street"]}')
+st.write(f'Адрес: {selected_flat["address"]}')
+st.write(f'Площадь: {selected_flat["area"]}')
 
 col1, col2, col3, col4 = st.columns(4)
 
