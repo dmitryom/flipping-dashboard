@@ -71,7 +71,7 @@ agent_commission = (expected_sale_price - renovation_cost) * (agent_commission_c
 total_expenses = price_sq + renovation_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
-st.subheader(f'Цена входа: {price_sq} руб')
+st.subheader(f'Цена входа: {selected_flat['price_sq']} руб')
 st.subheader(f'Цена выхода потенциальная: {expected_sale_price} руб')
 
 col1, col2, col3, col4 = st.columns(4)
