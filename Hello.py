@@ -54,17 +54,11 @@ selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Объект: {selected_flat["floor"]} ком.кв., {selected_flat["city"]}, {selected_flat["street"]}, {selected_flat["address"]}, Площадь: {selected_flat["area"]}')
 st.write(f'Метро: {selected_flat["all_data.geo.undergrounds[0].name"]},{selected_flat["all_data.geo.undergrounds[0].time"]} мин.')
 
-
-col1.markdown("<h1>ROI</h1>", unsafe_allow_html=True)
+col1, col2, col3, col4 = st.columns(4)
+col1.subheader("ROI")
 col1.metric("ROI", "20%", "4%")
-
-col2.markdown("<h1>Индекс транспортной доступности</h1>", unsafe_allow_html=True)
 col2.metric("Индекс транспортной доступности", "5", "10")
-
-col3.markdown("<h1>Индекс доступности инфраструктуры</h1>", unsafe_allow_html=True)
 col3.metric("Индекс доступности инфраструктуры", "6", "10")
-
-col4.markdown("<h1>Тренд</h1>", unsafe_allow_html=True)
 col4.metric("Тренд", "4%", "100%")
 
 
