@@ -92,7 +92,7 @@ st.markdown("---")
 
 st.subheader(f'Финансовые показатели')
 # Отображение результатов
-st.subheader(f'Цена входа: {price_sq} руб')
+st.subheader(f'Цена входа: {selected_flat["price_sq"]} руб')
 st.subheader(f'Цена выхода потенциальная: {expected_sale_price} руб')
 st.subheader(f'Затраты на ремонт: {renovation_cost} руб')
 st.subheader(f'Комиссия агента: {agent_commission} руб')
