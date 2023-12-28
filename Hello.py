@@ -34,6 +34,8 @@ def load_data():
 data = load_data()
 print(data.columns)
 
+# Установка параметров страницы для отображения во весь экран
+st.set_page_config(page_title='Расчет проекта', layout='wide')
 # Заголовок приложения
 st.title('Расчет проекта')
 
