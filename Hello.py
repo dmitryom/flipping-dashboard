@@ -54,6 +54,9 @@ selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Объект: {selected_flat["floor"]} ком.кв., {selected_flat["city"]}, {selected_flat["street"]}, {selected_flat["address"]}, Площадь: {selected_flat["area"]}')
 st.write(f'Метро: {selected_flat["all_data.geo.undergrounds[0].name"]},{selected_flat["all_data.geo.undergrounds[0].time"]} мин.')
 
+st.subheader(f'Цена входа: {expected_sale_price} руб')
+st.subheader(f'Цена выхода потенциальная: {expected_sale_price} руб')
+
 col1, col2, col3, col4 = st.columns(4)
 
 col1.metric("ROI","20%", "4%")
@@ -88,7 +91,8 @@ total_expenses = renovation_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
 # Отображение результатов
-st.subheader(f'Прогнозируемая стоимость продажи: {expected_sale_price} руб')
+st.subheader(f'Цена входа: {expected_sale_price} руб')
+st.subheader(f'Цена выхода потенциальная: {expected_sale_price} руб')
 st.subheader(f'Затраты на ремонт: {renovation_cost} руб')
 st.subheader(f'Комиссия агента: {agent_commission} руб')
 st.subheader(f'Общие затраты: {total_expenses} руб')
