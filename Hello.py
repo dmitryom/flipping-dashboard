@@ -49,10 +49,8 @@ selected_flat_id = st.sidebar.selectbox('Выберите квартиру', fil
 # Вывод адреса и района выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Адрес и район выбранной квартиры {selected_flat_id}')
-st.write(f'Город: {selected_flat["city"]}')
-st.write(f'Улица: {selected_flat["street"]}')
-st.write(f'Адрес: {selected_flat["address"]}')
-st.write(f'Площадь: {selected_flat["area"]}')
+st.write(f'Объект: {selected_flat["floor"]}, {selected_flat["city"]}, {selected_flat["street"]}, {selected_flat["address"]},{selected_flat["area"]} ')
+
 
 col1, col2, col3, col4 = st.columns(4)
 
