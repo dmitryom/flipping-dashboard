@@ -62,7 +62,7 @@ col3.metric("Индекс доступности инфраструктуры", 
 col4.metric("Тренд", "4%", "100%")
 
 
-col5, col6, col7, col8 = st.columns(4)
+col5, col6, col7, col8 = st.columns(8)
 col5.metric("ROI", "20%", "4%", font_size=18)
 col6.metric("Индекс транспортной доступности", "5", "10", font_size=18) 
 col7.metric("Индекс доступности инфраструктуры", "6", "10", font_size=18)
