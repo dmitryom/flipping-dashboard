@@ -56,7 +56,7 @@ st.write(f'Метро: {selected_flat["all_data.geo.undergrounds[0].name"]},{sel
 
 # Допущения
 renovation_cost_sq = st.number_input('Стоимость ремонта за квадратный метр:', )
-agent_commission_cost = st.number_input('Стоимость комиссии агента:', )
+agent_commission = st.number_input('Стоимость комиссии агента:', )
 
 # Расчет затрат на ремонт
 renovation_cost = selected_flat['area'] * renovation_cost_sq
@@ -68,7 +68,7 @@ expected_sale_price = selected_flat['predicted_price']
 
 
 # Расчет общих затрат и прибыли
-total_expenses = selected_flat['price_sq'] + renovation_cost + agent_commission_cost
+total_expenses = selected_flat['price_sq'] + renovation_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
 st.subheader(f'Цена входа: {selected_flat["price_sq"]} руб')
