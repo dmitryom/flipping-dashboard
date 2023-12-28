@@ -71,11 +71,11 @@ st.write(selected_flat)
 st.markdown("---")
 
 # Допущения
-renovation_cost = st.number_input('Процент затрат на ремонт:', 5, 50, 10)
-agent_commission_cost = st.number_input('Процент комиссии агента:', 1, 10, 5)
+renovation_cost = st.number_input('Стоимость ремонта за квадратный метр:', )
+agent_commission_cost = st.number_input('Стоимость комиссии:', )
 
 # Расчет затрат на ремонт
-renovation_cost = selected_flat['area'] * renovation_percentage
+renovation_cost = selected_flat['area'] * renovation_cost
 
 # Ожидаемая стоимость продажи (может быть заменена на реальные данные)
 expected_sale_price = selected_flat['predicted_price']
