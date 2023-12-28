@@ -88,11 +88,11 @@ total_expenses = renovation_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
 # Отображение результатов
-st.write(f'Прогнозируемая стоимость продажи: {expected_sale_price} руб')
-st.write(f'Затраты на ремонт: {renovation_cost} руб')
-st.write(f'Комиссия агента: {agent_commission} руб')
-st.write(f'Общие затраты: {total_expenses} руб')
-st.write(f'Прибыль: {profit} руб')
+st.subheader(f'Прогнозируемая стоимость продажи: {expected_sale_price} руб')
+st.subheader(f'Затраты на ремонт: {renovation_cost} руб')
+st.subheader(f'Комиссия агента: {agent_commission} руб')
+st.subheader(f'Общие затраты: {total_expenses} руб')
+st.subheader(f'Прибыль: {profit} руб')
 
 st.subheader('Анализ стоимости квартиры')
 # График цен за квадратный метр
