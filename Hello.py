@@ -46,11 +46,14 @@ filtered_data = data[data['city'] == selected_city]
 # Сайдбар для выбора квартиры из отфильтрованных данных
 selected_flat_id = st.sidebar.selectbox('Выберите квартиру', filtered_data['id'])
 
-# Отображение адреса квартиры
 
-# Индекс транспортной доступности
+col1, col2, col3, col4 = st.columns(4)
 
-# Индекс доступности инфраструктуры
+col1.metric("ROI", "20%", "4%")
+col2.metric("Индекс транспортной доступности", "70 °F", "1.2 °F")
+col3.metric("Индекс доступности инфраструктуры", "9 mph", "-8%")
+col4.metric("Тренд", "4%", "4%")
+
 
 # Отображение характеристик выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
