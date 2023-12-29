@@ -83,7 +83,7 @@ col2.metric(
 # Отображение характеристик выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Характеристики')
-st.write(f'* Этаж: {selected_flat["floor"]/["house_floors"]}')
+st.write(f'* Этаж: {selected_flat["floor"]/selected_flat["house_floors"]}')
 st.write(f'* Этаж: {selected_flat["floor"]}')
 st.write(f'* Этаж: {selected_flat["floor"]}')
 st.write(f'* Этаж: {selected_flat["floor"]}')
