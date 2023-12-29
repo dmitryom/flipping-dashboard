@@ -83,16 +83,15 @@ col2.metric(
 # Отображение характеристик выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Характеристики')
+st.write(f'* Комнат: {selected_flat["rooms"]}')
 st.write(f'* Этаж: {selected_flat["floor"]} из {selected_flat["house_floors"]}')
 st.write(f'* Общая площадь: {selected_flat["area"]}')
 st.write(f'* Жилая площадь: {selected_flat["all_data.livingArea"]}')
 st.write(f'* Площадь кухни: {selected_flat["kitchen_area"]}')
-st.write(f'* Комнат: {selected_flat["rooms"]}')
 st.write(f'* Санузел: {selected_flat["bathroom_type"]}')
 st.write(f'* Лифт: пассажирский {selected_flat["lifts"]} грузовой {selected_flat["freight_lifts"]} ')
-st.write(f'* Вид из окна: {selected_flat["floor"]}')
 st.write(f'* Материал дома: {selected_flat["house_wall_type"]}')
-st.write(f'* Год постройки: {selected_flat["floor"]}')
+st.write(f'* Год постройки: {selected_flat["build_year"]}')
 
 
 # Флиппинг-проект
