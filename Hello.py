@@ -161,32 +161,34 @@ st.markdown("---")
 
 
 
-# Функция для отображения графика
-def plot_prices(selected_flat, filtered_data):
-    fig, ax = plt.subplots()
-    
-    # Цены всех квартир в выбранном городе
-    ax.hist(filtered_data['price_sq'] * filtered_data['area'], bins=30, alpha=0.5, label='Цены всех квартир')
+# Выберите квартиру и получите соответствующие данные
+selected_flat = data[data['id'] == selected_flat_id].squeeze()
+
+# Создание графика
+def plot_prices(data, selected_flat):
+    plt.figure(figsize=(10, 5))
+    # Гистограмма всех цен
+    sns.histplot(data['price'], kde=False, color='skyblue', bins=50)
     
     # Цена выбранной квартиры
-    ax.axvline(x=selected_flat['price_sq'] * selected_flat['area'], color='red', linestyle='dashed', linewidth=2, label='Цена выбранной квартиры')
+    plt.axvline(x=selected_flat['price'], color='green', linestyle='--', linewidth=2, label='Текущая цена выбранной квартиры')
     
-    # Прогнозная цена выбранной квартиры
-    ax.axvline(x=expected_sale_price * selected_flat['area'], color='green', linestyle='dashed', linewidth=2, label='Прогнозная цена')
+    # Прогнозируемая цена выбранной квартиры
+    plt.axvline(x=selected_flat['predicted_price'], color='red', linestyle='--', linewidth=2, label='Прогнозируемая цена выбранной квартиры')
     
-    # Настройка подписей и легенды
-    ax.set_xlabel('Цена')
-    ax.set_ylabel('Количество квартир')
-    ax.legend()
-    
-    # Отображение графика в Streamlit
-    st.pyplot(fig)
+    plt.title('Распределение цен на квартиры')
+    plt.xlabel('Цена')
+    plt.ylabel('Количество квартир')
+    plt.legend()
+    plt.tight_layout()
+    return plt
 
+# Отображение графика в Streamlit
+st.write('## График цен')
+plot = plot_prices(data, selected_flat)
+st.pyplot(plot)
 
-
-# Отображение графика
-plot_prices(selected_flat, filtered_data)
-
+st.markdown("---")
 
 # Таблица конкурентов в радиусе 1500 метров
 st.subheader('Таблица конкурентов в радиусе 1500 метров')
