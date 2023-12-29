@@ -69,9 +69,18 @@ col2.metric("Индекс транспортной доступности", "5",
 col3.metric("Индекс доступности инфраструктуры", "6", "10")
 col4.metric("Тренд", "4%", "100%")
 
+col1, col2 = st.columns(2)
+col1.metric(
+    "Цена входа:" 
+    f'{selected_flat["price_sq"] * selected_flat["area"]} руб',
+    help="Цена в объявлении",
+    )
+col2.metric(
+    "Цена выхода потенциальная:"
+    f'{expected_sale_price * selected_flat["area"]} руб',
+    help="Цена выхода по оценке искусственного интеллекта (ИИ)",
+    )
 
-st.subheader(f'Цена входа: {selected_flat["price_sq"] * selected_flat["area"]} руб')
-st.subheader(f'Цена выхода потенциальная: {expected_sale_price * selected_flat["area"]} руб')
 
 # Отображение характеристик выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
