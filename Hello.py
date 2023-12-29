@@ -105,7 +105,7 @@ with col2:
     st.write(f'* Прибыль: {profit} руб.')
 
 # Флиппинг-проект
-#st.markdown("---")
+st.markdown("---")
 
 
 st.subheader('Анализ стоимости квартиры')
