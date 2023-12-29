@@ -110,7 +110,7 @@ with col2:
 
 st.subheader('Анализ стоимости квартиры')
 # График цен за квадратный метр
-chart, ax = plt.subplots(figsize=(8, 6))
+chart, ax = plt.subplots(figsize=(4, 3))
 
 # Фоновый график для всех квартир
 sns.stripplot(
@@ -118,7 +118,7 @@ sns.stripplot(
     y='price_sq',
     color='white',
     jitter=0.3,
-    size=8,
+    size=4,
     linewidth=1,
     edgecolor='gainsboro',
     alpha=0.7
@@ -158,6 +158,35 @@ st.pyplot(chart)
 
 # Разделение между графиком и таблицей
 st.markdown("---")
+
+
+
+# Функция для отображения графика
+def plot_prices(selected_flat, filtered_data):
+    fig, ax = plt.subplots()
+    
+    # Цены всех квартир в выбранном городе
+    ax.hist(filtered_data['price_sq'] * filtered_data['area'], bins=30, alpha=0.5, label='Цены всех квартир')
+    
+    # Цена выбранной квартиры
+    ax.axvline(x=selected_flat['price_sq'] * selected_flat['area'], color='red', linestyle='dashed', linewidth=2, label='Цена выбранной квартиры')
+    
+    # Прогнозная цена выбранной квартиры
+    ax.axvline(x=expected_sale_price * selected_flat['area'], color='green', linestyle='dashed', linewidth=2, label='Прогнозная цена')
+    
+    # Настройка подписей и легенды
+    ax.set_xlabel('Цена')
+    ax.set_ylabel('Количество квартир')
+    ax.legend()
+    
+    # Отображение графика в Streamlit
+    st.pyplot(fig)
+
+
+
+# Отображение графика
+plot_prices(selected_flat, filtered_data)
+
 
 # Таблица конкурентов в радиусе 1500 метров
 st.subheader('Таблица конкурентов в радиусе 1500 метров')
