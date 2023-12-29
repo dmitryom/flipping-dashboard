@@ -97,12 +97,12 @@ with col1:
 with col2:
     st.subheader(f'Финансовые показатели')
     # Отображение результатов
-    st.write(f'Цена входа: {selected_flat["price_sq"]} руб')
-    st.write(f'Цена выхода потенциальная: {expected_sale_price} руб')
-    st.write(f'Затраты на ремонт: {renovation_cost} руб')
-    st.write(f'Комиссия агента: {agent_commission} руб')
-    st.write(f'Общие затраты: {total_expenses} руб')
-    st.write(f'Прибыль: {profit} руб')
+    st.write(f'* Цена входа: {selected_flat["price_sq"]} руб.')
+    st.write(f'* Цена выхода потенциальная: {expected_sale_price} руб.')
+    st.write(f'* Затраты на ремонт: {renovation_cost} руб.')
+    st.write(f'* Комиссия агента: {agent_commission} руб.')
+    st.write(f'* Общие затраты: {total_expenses} руб.')
+    st.write(f'* Прибыль: {profit} руб.')
 
 # Флиппинг-проект
 #st.markdown("---")
