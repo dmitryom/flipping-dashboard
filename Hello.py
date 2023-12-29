@@ -44,9 +44,9 @@ filtered_data = data[data['city'] == selected_city]
 selected_flat_id = st.sidebar.selectbox('Выберите квартиру', filtered_data['id'])
 
 # Допущения
-renovation_cost_sq = st.sidebar.number_input('Стоимость ремонта за квадратный метр:', )
+renovation_cost_sq = st.sidebar.number_input('Стоимость ремонта за квадратный метр:', 35000 )
 # Расчет комиссии агента
-agent_commission = st.sidebar.number_input('Стоимость комиссии агента:', )
+agent_commission = st.sidebar.number_input('Стоимость комиссии агента:', 100000 )
 
 # Вывод адреса и района выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
