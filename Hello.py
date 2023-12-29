@@ -32,7 +32,7 @@ def load_data():
 data = load_data()
 print(data.columns)
 # Заголовок приложения
-st.title('Расчет проекта')
+st.subheader('Расчет проекта')
 
 # Сайдбар для выбора города
 selected_city = st.sidebar.selectbox('Выберите город', data['city'].unique())
