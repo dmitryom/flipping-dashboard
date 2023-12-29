@@ -80,8 +80,6 @@ col2.metric(
     f'{expected_sale_price * selected_flat["area"]} руб',
     help="Цена выхода по оценке искусственного интеллекта (ИИ)",
     )
-col3.metric()
-col4.metric()
 # Отображение характеристик выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Характеристики {selected_flat_id}')
