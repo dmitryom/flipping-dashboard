@@ -110,7 +110,7 @@ with col2:
 
 st.subheader('Анализ стоимости квартиры')
 # График цен за квадратный метр
-chart, ax = plt.subplots(figsize=(4, 3))
+chart, ax = plt.subplots(figsize=(10, 5))
 
 # Фоновый график для всех квартир
 sns.stripplot(
@@ -118,7 +118,7 @@ sns.stripplot(
     y='price_sq',
     color='white',
     jitter=0.3,
-    size=4,
+    size=10,
     linewidth=1,
     edgecolor='gainsboro',
     alpha=0.7
@@ -165,28 +165,7 @@ st.markdown("---")
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 
 # Создание графика
-def plot_prices(data, selected_flat):
-    plt.figure(figsize=(10, 5))
-    # Гистограмма всех цен
-    sns.histplot(data['price_sq'], kde=False, color='skyblue', bins=50)
-    
-    # Цена выбранной квартиры
-    plt.axvline(x=selected_flat['price_sq'], color='green', linestyle='--', linewidth=2, label='Текущая цена выбранной квартиры')
-    
-    # Прогнозируемая цена выбранной квартиры
-    plt.axvline(x=selected_flat['predicted_price'], color='red', linestyle='--', linewidth=2, label='Прогнозируемая цена выбранной квартиры')
-    
-    plt.title('Распределение цен на квартиры')
-    plt.xlabel('Цена')
-    plt.ylabel('Количество квартир')
-    plt.legend()
-    plt.tight_layout()
-    return plt
 
-# Отображение графика в Streamlit
-st.write('## График цен')
-plot = plot_prices(data, selected_flat)
-st.pyplot(plot)
 
 st.markdown("---")
 
