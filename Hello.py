@@ -69,7 +69,7 @@ col2.metric("Индекс транспортной доступности", "5",
 col3.metric("Индекс доступности инфраструктуры", "6", "10")
 col4.metric("Тренд", "4%", "100%")
 
-col1, col2 = st.columns(4)
+col1, col2, col3, col4 = st.columns(4)
 col1.metric(
     "Цена входа:",
     f'{selected_flat["price_sq"] * selected_flat["area"]} руб',
