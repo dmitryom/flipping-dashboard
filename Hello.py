@@ -63,8 +63,8 @@ expected_sale_price = selected_flat['predicted_price']
 total_expenses = selected_flat['price_sq'] + renovation_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
-st.subheader(f'Цена входа: {selected_flat["price_sq"]} руб')
-st.subheader(f'Цена выхода потенциальная: {expected_sale_price} руб')
+st.subheader(f'Цена входа: {selected_flat["price_sq"]}*{selected_flat["area"]} руб')
+st.subheader(f'Цена выхода потенциальная: {expected_sale_price}*{selected_flat["area"]} руб')
 
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("ROI","20%", "4%")
