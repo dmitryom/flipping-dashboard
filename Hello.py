@@ -168,10 +168,10 @@ selected_flat = data[data['id'] == selected_flat_id].squeeze()
 def plot_prices(data, selected_flat):
     plt.figure(figsize=(10, 5))
     # Гистограмма всех цен
-    sns.histplot(data['price'], kde=False, color='skyblue', bins=50)
+    sns.histplot(data['price_sq'], kde=False, color='skyblue', bins=50)
     
     # Цена выбранной квартиры
-    plt.axvline(x=selected_flat['price'], color='green', linestyle='--', linewidth=2, label='Текущая цена выбранной квартиры')
+    plt.axvline(x=selected_flat['price_sq'], color='green', linestyle='--', linewidth=2, label='Текущая цена выбранной квартиры')
     
     # Прогнозируемая цена выбранной квартиры
     plt.axvline(x=selected_flat['predicted_price'], color='red', linestyle='--', linewidth=2, label='Прогнозируемая цена выбранной квартиры')
