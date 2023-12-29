@@ -81,10 +81,9 @@ col2.metric(
     help="Цена выхода по оценке искусственного интеллекта (ИИ)",
     )
 
-
 # Отображение характеристик выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
-st.subheader(f'Основные характеристики квартиры {selected_flat_id}')
+st.subheader(f'Характеристики {selected_flat_id}')
 st.write(selected_flat)
 
 # Флиппинг-проект
