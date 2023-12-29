@@ -54,7 +54,7 @@ st.write(f'{selected_flat["city"]}')
 st.title(f'🏠 {selected_flat["street"]}, {selected_flat["address"]}')
 #{selected_flat["floor"]} ком.кв., {selected_flat["city"]}, Площадь: {selected_flat["area"]}
 st.write(f'Ⓜ️ Метро: {selected_flat["all_data.geo.undergrounds[0].name"]}, {selected_flat["all_data.geo.undergrounds[0].time"]} мин.')
-
+st.write(f'Ⓜ️ Метро: {selected_flat["all_data.geo.address[2].title"]}, {selected_flat["all_data.geo.address[1].title"]}')
 # Расчет затрат на ремонт
 renovation_cost = selected_flat['area'] * renovation_cost_sq
 # Ожидаемая стоимость продажи (может быть заменена на реальные данные)
@@ -84,14 +84,17 @@ col2.metric(
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'Характеристики')
 st.write(f'* Этаж: {selected_flat["floor"]} из {selected_flat["house_floors"]}')
-st.write(f'* Этаж: {selected_flat["floor"]}')
-st.write(f'* Этаж: {selected_flat["floor"]}')
-st.write(f'* Этаж: {selected_flat["floor"]}')
-st.write(f'* Этаж: {selected_flat["floor"]}')
-st.write(f'* Этаж: {selected_flat["floor"]}')
-st.write(f'* Этаж: {selected_flat["floor"]}')
-st.write(f'* Этаж: {selected_flat["floor"]}')
-st.write(f'* Этаж: {selected_flat["floor"]}')
+st.write(f'* Общая площадь: {selected_flat["area"]}')
+st.write(f'* Жилая площадь: {selected_flat["all_data.livingArea"]}')
+st.write(f'* Площадь кухни: {selected_flat["kitchen_area"]}')
+st.write(f'* Комнат: {selected_flat["rooms"]}')
+st.write(f'* Санузел: {selected_flat["bathroom_type"]}')
+st.write(f'* Лифт: пассажирский {selected_flat["lifts"]} грузовой {selected_flat["freight_lifts"]} ')
+st.write(f'* Вид из окна: {selected_flat["floor"]}')
+st.write(f'* Материал дома: {selected_flat["house_wall_type"]}')
+st.write(f'* Год постройки: {selected_flat["floor"]}')
+
+
 # Флиппинг-проект
 st.markdown("---")
 
