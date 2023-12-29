@@ -41,7 +41,12 @@ selected_city = st.sidebar.selectbox('Выберите город', data['city']
 filtered_data = data[data['city'] == selected_city]
 
 # Сайдбар для выбора квартиры из отфильтрованных данных
-selected_flat_id = st.sidebar.selectbox('Выберите квартиру', filtered_data['id'])
+selected_flat_id = st.selectbox('Выберите квартиру', filtered_data['id'])
+
+# Допущения
+renovation_cost_sq = st.sidebar.number_input('Стоимость ремонта за квадратный метр:', )
+# Расчет комиссии агента
+agent_commission = st.sidebar.number_input('Стоимость комиссии агента:', )
 
 # Вывод адреса и района выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
@@ -74,10 +79,7 @@ st.write(selected_flat)
 
 # Флиппинг-проект
 st.markdown("---")
-# Допущения
-renovation_cost_sq = st.number_input('Стоимость ремонта за квадратный метр:', )
-# Расчет комиссии агента
-agent_commission = st.number_input('Стоимость комиссии агента:', )
+
 st.subheader(f'Финансовые показатели')
 # Отображение результатов
 st.subheader(f'Цена входа: {selected_flat["price_sq"]} руб')
