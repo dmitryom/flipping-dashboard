@@ -90,12 +90,12 @@ st.markdown("---")
 
 st.subheader(f'Финансовые показатели')
 # Отображение результатов
-st.subheader(f'Цена входа: {selected_flat["price_sq"]} руб')
-st.subheader(f'Цена выхода потенциальная: {expected_sale_price} руб')
-st.subheader(f'Затраты на ремонт: {renovation_cost} руб')
-st.subheader(f'Комиссия агента: {agent_commission} руб')
-st.subheader(f'Общие затраты: {total_expenses} руб')
-st.subheader(f'Прибыль: {profit} руб')
+st.write(f'Цена входа: {selected_flat["price_sq"]} руб')
+st.write(f'Цена выхода потенциальная: {expected_sale_price} руб')
+st.write(f'Затраты на ремонт: {renovation_cost} руб')
+st.write(f'Комиссия агента: {agent_commission} руб')
+st.write(f'Общие затраты: {total_expenses} руб')
+st.write(f'Прибыль: {profit} руб')
 
 st.subheader('Анализ стоимости квартиры')
 # График цен за квадратный метр
