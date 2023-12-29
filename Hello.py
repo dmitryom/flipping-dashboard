@@ -63,14 +63,15 @@ expected_sale_price = selected_flat['predicted_price']
 total_expenses = selected_flat['price_sq'] + renovation_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
-st.subheader(f'Цена входа: {selected_flat["price_sq"] * selected_flat["area"]} руб')
-st.subheader(f'Цена выхода потенциальная: {expected_sale_price * selected_flat["area"]} руб')
-
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("ROI","20%", "4%")
 col2.metric("Индекс транспортной доступности", "5", "10")
 col3.metric("Индекс доступности инфраструктуры", "6", "10")
 col4.metric("Тренд", "4%", "100%")
+
+
+st.subheader(f'Цена входа: {selected_flat["price_sq"] * selected_flat["area"]} руб')
+st.subheader(f'Цена выхода потенциальная: {expected_sale_price * selected_flat["area"]} руб')
 
 # Отображение характеристик выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
