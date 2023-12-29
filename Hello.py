@@ -64,7 +64,7 @@ total_expenses = selected_flat['price_sq'] + renovation_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
 col1, col2, col3, col4 = st.columns(4)
-col1.metric("ROI","20%", "4%")
+col1.metric(🔄"ROI","20%", "4%")
 col2.metric("Индекс транспортной доступности", "5", "10")
 col3.metric("Индекс доступности инфраструктуры", "6", "10")
 col4.metric("Тренд", "4%", "100%")
