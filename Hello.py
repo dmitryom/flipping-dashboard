@@ -72,7 +72,7 @@ col4.metric("📊 Тренд", "4%", "100%")
 col1, col2, col3, col4 = st.columns(4)
 col1.metric(
     "💰 Цена входа:",
-    f'{selected_flat["price_sq"] * selected_flat["area"]} руб.',
+    f'{selected_flat["all_data.bargainTerms.price"]} руб.',
     help="Цена в объявлении",
     )
 col2.metric(
