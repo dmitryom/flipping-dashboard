@@ -82,29 +82,31 @@ col2.metric(
     )
 # Отображение характеристик выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
-st.subheader(f'Характеристики')
-st.write(f'* Комнат: {selected_flat["rooms"]}')
-st.write(f'* Общая площадь: {selected_flat["area"]}')
-st.write(f'* Жилая площадь: {selected_flat["all_data.livingArea"]}')
-st.write(f'* Площадь кухни: {selected_flat["kitchen_area"]}')
-st.write(f'* Этаж: {selected_flat["floor"]} из {selected_flat["house_floors"]}')
-st.write(f'* Санузел: {selected_flat["bathroom_type"]}')
-st.write(f'* Лифт: пассажирский {selected_flat["lifts"]} грузовой {selected_flat["freight_lifts"]} ')
-st.write(f'* Материал дома: {selected_flat["house_wall_type"]}')
-st.write(f'* Год постройки: {selected_flat["build_year"]}')
-
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.subheader(f'Характеристики')
+    st.write(f'* Комнат: {selected_flat["rooms"]}')
+    st.write(f'* Общая площадь: {selected_flat["area"]}')
+    st.write(f'* Жилая площадь: {selected_flat["all_data.livingArea"]}')
+    st.write(f'* Площадь кухни: {selected_flat["kitchen_area"]}')
+    st.write(f'* Этаж: {selected_flat["floor"]} из {selected_flat["house_floors"]}')
+    st.write(f'* Санузел: {selected_flat["bathroom_type"]}')
+    st.write(f'* Лифт: пассажирский {selected_flat["lifts"]} грузовой {selected_flat["freight_lifts"]} ')
+    st.write(f'* Материал дома: {selected_flat["house_wall_type"]}')
+    st.write(f'* Год постройки: {selected_flat["build_year"]}')
+with col2:
+    st.subheader(f'Финансовые показатели')
+    # Отображение результатов
+    st.write(f'Цена входа: {selected_flat["price_sq"]} руб')
+    st.write(f'Цена выхода потенциальная: {expected_sale_price} руб')
+    st.write(f'Затраты на ремонт: {renovation_cost} руб')
+    st.write(f'Комиссия агента: {agent_commission} руб')
+    st.write(f'Общие затраты: {total_expenses} руб')
+    st.write(f'Прибыль: {profit} руб')
 
 # Флиппинг-проект
-st.markdown("---")
+#st.markdown("---")
 
-st.subheader(f'Финансовые показатели')
-# Отображение результатов
-st.write(f'Цена входа: {selected_flat["price_sq"]} руб')
-st.write(f'Цена выхода потенциальная: {expected_sale_price} руб')
-st.write(f'Затраты на ремонт: {renovation_cost} руб')
-st.write(f'Комиссия агента: {agent_commission} руб')
-st.write(f'Общие затраты: {total_expenses} руб')
-st.write(f'Прибыль: {profit} руб')
 
 st.subheader('Анализ стоимости квартиры')
 # График цен за квадратный метр
