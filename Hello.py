@@ -48,11 +48,8 @@ selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.write(f'{selected_flat["city"]}')
 st.title(f'{selected_flat["street"]}, {selected_flat["address"]}')
 #{selected_flat["floor"]} ком.кв., {selected_flat["city"]}, Площадь: {selected_flat["area"]}
-st.write(f'Метро: {selected_flat["all_data.geo.undergrounds[0].name"]},{selected_flat["all_data.geo.undergrounds[0].time"]} мин.')
-# Допущения
-renovation_cost_sq = st.number_input('Стоимость ремонта за квадратный метр:', )
-# Расчет комиссии агента
-agent_commission = st.number_input('Стоимость комиссии агента:', )
+st.write(f'Метро: {selected_flat["all_data.geo.undergrounds[0].name"]}, {selected_flat["all_data.geo.undergrounds[0].time"]} мин.')
+
 # Расчет затрат на ремонт
 renovation_cost = selected_flat['area'] * renovation_cost_sq
 # Ожидаемая стоимость продажи (может быть заменена на реальные данные)
@@ -77,7 +74,10 @@ st.write(selected_flat)
 
 # Флиппинг-проект
 st.markdown("---")
-
+# Допущения
+renovation_cost_sq = st.number_input('Стоимость ремонта за квадратный метр:', )
+# Расчет комиссии агента
+agent_commission = st.number_input('Стоимость комиссии агента:', )
 st.subheader(f'Финансовые показатели')
 # Отображение результатов
 st.subheader(f'Цена входа: {selected_flat["price_sq"]} руб')
