@@ -51,7 +51,8 @@ agent_commission = st.sidebar.number_input('Стоимость комиссии 
 # Вывод адреса и района выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.write(f'{selected_flat["city"]}')
-🏠 st.title(f'{selected_flat["street"]}, {selected_flat["address"]}')
+🏠 
+st.title(f'{selected_flat["street"]}, {selected_flat["address"]}')
 #{selected_flat["floor"]} ком.кв., {selected_flat["city"]}, Площадь: {selected_flat["area"]}
 st.write(f'Метро: {selected_flat["all_data.geo.undergrounds[0].name"]}, {selected_flat["all_data.geo.undergrounds[0].time"]} мин.')
 
