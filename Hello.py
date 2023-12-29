@@ -33,15 +33,19 @@ data = load_data()
 print(data.columns)
 # Заголовок приложения
 st.title('Расчет проекта')
+
 # Сайдбар для выбора города
 selected_city = st.sidebar.selectbox('Выберите город', data['city'].unique())
+
 # Фильтрация данных по выбранному городу
 filtered_data = data[data['city'] == selected_city]
+
 # Сайдбар для выбора квартиры из отфильтрованных данных
 selected_flat_id = st.sidebar.selectbox('Выберите квартиру', filtered_data['id'])
+
 # Вывод адреса и района выбранной квартиры
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
-st.subheader(f'Объект: {selected_flat["floor"]} ком.кв., {selected_flat["city"]}, {selected_flat["street"]}, {selected_flat["address"]}, Площадь: {selected_flat["area"]}')
+st.header(f'{selected_flat["floor"]} ком.кв., {selected_flat["city"]}, {selected_flat["street"]}, {selected_flat["address"]}, Площадь: {selected_flat["area"]}')
 st.write(f'Метро: {selected_flat["all_data.geo.undergrounds[0].name"]},{selected_flat["all_data.geo.undergrounds[0].time"]} мин.')
 # Допущения
 renovation_cost_sq = st.number_input('Стоимость ремонта за квадратный метр:', )
