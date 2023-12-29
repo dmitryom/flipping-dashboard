@@ -72,12 +72,12 @@ col4.metric("📊 Тренд", "4%", "100%")
 col1, col2, col3, col4 = st.columns(4)
 col1.metric(
     "💰 Цена входа:",
-    f'{selected_flat["price_sq"] * selected_flat["area"]} руб',
+    f'{selected_flat["price_sq"] * selected_flat["area"]} руб.',
     help="Цена в объявлении",
     )
 col2.metric(
     "💸 Цена выхода потенциальная:",
-    f'{expected_sale_price * selected_flat["area"]} руб',
+    f'{expected_sale_price * selected_flat["area"]} руб.',
     help="Цена выхода по оценке искусственного интеллекта (ИИ)",
     )
 # Отображение характеристик выбранной квартиры
