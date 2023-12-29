@@ -41,7 +41,7 @@ selected_city = st.sidebar.selectbox('Выберите город', data['city']
 filtered_data = data[data['city'] == selected_city]
 
 # Сайдбар для выбора квартиры из отфильтрованных данных
-selected_flat_id = st.selectbox('Выберите квартиру', filtered_data['id'])
+selected_flat_id = st.sidebar.selectbox('Выберите квартиру', filtered_data['id'])
 
 # Допущения
 renovation_cost_sq = st.sidebar.number_input('Стоимость ремонта за квадратный метр:', )
