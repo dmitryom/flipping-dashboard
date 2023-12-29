@@ -167,18 +167,7 @@ selected_flat = data[data['id'] == selected_flat_id].squeeze()
 # Создание графика
 
 # Plot selected flat price and predicted price against prices of all flats
-flat_prices = filtered_data['price_sq'] * filtered_data['area']
-flat_predicted_prices = filtered_data['predicted_price'] * filtered_data['area']
-fig, ax = plt.subplots(figsize=(12, 6))
-sns.scatterplot(x=flat_prices, y=flat_predicted_prices, data=filtered_data, alpha=0.5, label='All Flats')
-sns.scatterplot(x=[selected_flat['price_sq'] * selected_flat['area']], y=[selected_flat['predicted_price'] * selected_flat['area']], color='red', label='Selected Flat')
-ax.axhline(y=selected_flat['price_sq'] * selected_flat['area'], color='green', linestyle='--', label='Current Price')
-ax.axhline(y=expected_sale_price * selected_flat['area'], color='orange', linestyle='--', label='Expected Sale Price')
-ax.set_xlabel('Price (Rubles)')
-ax.set_ylabel('Predicted Price (Rubles)')
-ax.set_title('Selected Flat Price vs. All Flats Prices')
-ax.legend()
-st.pyplot(fig)
+
 
 st.markdown("---")
 
