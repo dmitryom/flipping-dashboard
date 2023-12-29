@@ -71,12 +71,12 @@ col4.metric("Тренд", "4%", "100%")
 
 col1, col2 = st.columns(2)
 col1.metric(
-    "Цена входа:" 
+    "Цена входа:",
     f'{selected_flat["price_sq"] * selected_flat["area"]} руб',
     help="Цена в объявлении",
     )
 col2.metric(
-    "Цена выхода потенциальная:"
+    "Цена выхода потенциальная:",
     f'{expected_sale_price * selected_flat["area"]} руб',
     help="Цена выхода по оценке искусственного интеллекта (ИИ)",
     )
