@@ -226,5 +226,12 @@ else:
     st.subheader('Карта конкурентов в радиусе 1500 метров')
     m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
     for index, flat in competitors_data.iterrows():
-        # ... your existing map code ...
+    # Определение цвета маркера для выбранной квартиры
+    marker_color = 'red' if flat['id'] == selected_flat_id else 'blue'
+    
+    folium.Marker([flat['lat'], flat['lon']],
+                  popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
+                  tooltip=f"{flat['city']}, {flat['price_sq']} руб/м²",
+                  icon=folium.Icon(color=marker_color),
+                  auto_open=True).add_to(m)
     folium_static(m)
