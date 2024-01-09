@@ -205,33 +205,3 @@ for index, flat in competitors_data.iterrows():
 # Отображение карты
 folium_static(m)
 
-
-import streamlit as st
-import folium
-from streamlit_folium import folium_static
-
-# Your existing code...
-
-# Define radio buttons to switch between table and map view
-st.subheader('Choose an option:')
-view_options = ['Table View', 'Map View']
-current_view = st.radio("", view_options, index=0)
-
-# Switch between table and map views
-if current_view == 'Table View':
-    st.subheader('Таблица конкурентов в радиусе 1500 метров')
-    st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
-    st.button('View on Map', on_click=lambda: st.sidebar.selectbox('Select a competitor', competitors_data['City'].unique(), index=0))
-else:
-    st.subheader('Карта конкурентов в радиусе 1500 метров')
-    m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
-    for index, flat in competitors_data.iterrows():
-    # Определение цвета маркера для выбранной квартиры
-        marker_color = 'red' if flat['id'] == selected_flat_id else 'blue'
-        
-        folium.Marker([flat['lat'], flat['lon']],
-                      popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
-                      tooltip=f"{flat['city']}, {flat['price_sq']} руб/м²",
-                      icon=folium.Icon(color=marker_color),
-                      auto_open=True).add_to(m)
-        folium_static(m)
