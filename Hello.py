@@ -205,3 +205,50 @@ for index, flat in competitors_data.iterrows():
 # Отображение карты
 folium_static(m)
 
+import streamlit as st
+import pandas as pd
+from geopy.distance import geodesic
+import folium
+from streamlit_folium import folium_static
+
+# Предположим, что filtered_data, selected_flat и selected_flat_id уже определены в коде
+
+# Таблица конкурентов в радиусе 1500 метров
+st.subheader('Таблица конкурентов в радиусе 1500 метров')
+
+# Фильтрация данных для отображения только конкурентов в радиусе 1500 метров
+competitors_data = filtered_data.copy()
+competitors_data['Distance (meters)'] = competitors_data.apply(
+    lambda row: geodesic((row['lat'], row['lon']), (selected_flat['lat'], selected_flat['lon'])).meters,
+    axis=1
+)
+competitors_data = competitors_data[competitors_data['Distance (meters)'] <= 1500]
+
+# Выделение выбранной квартиры в таблице
+competitors_data['Selected'] = competitors_data['id'] == selected_flat_id
+
+# Отображение таблицы с возможностью выбора строки
+selected_indices = st.multiselect('Выберите квартиры:', competitors_data.index)
+
+# Фильтрация данных только с выбранными строками, если есть выбор
+if selected_indices:
+    competitors_data = competitors_data.loc[selected_indices]
+
+# Отображение карты
+st.subheader('Карта конкурентов в радиусе 1500 метров')
+m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14)
+
+# Перебор всех квартир и добавление маркеров
+for index, flat in competitors_data.iterrows():
+    marker_color = 'red' if flat['Selected'] else 'blue'
+    folium.Marker(
+        [flat['lat'], flat['lon']],
+        popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
+        icon=folium.Icon(color=marker_color)
+    ).add_to(m)
+
+# Отображение карты
+folium_static(m)
+
+# Возвращаем отображение таблицы после карты, чтобы обеспечить взаимодействие
+st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
