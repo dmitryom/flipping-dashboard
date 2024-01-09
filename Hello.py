@@ -204,3 +204,47 @@ for index, flat in competitors_data.iterrows():
 
 # Отображение карты
 folium_static(m)
+
+
+# Таблица конкурентов в радиусе 1500 метров
+st.subheader('Таблица конкурентов в радиусе 1500 метров')
+# Фильтрация данных для отображения только конкурентов в радиусе 1500 метров
+competitors_data = filtered_data.copy()
+competitors_data['Distance (meters)'] = competitors_data.apply(
+    lambda row: geodesic((row['lat'], row['lon']), (selected_flat['lat'], selected_flat['lon'])).meters,
+    axis=1
+)
+competitors_data = competitors_data[competitors_data['Distance (meters)'] <= 1500]
+
+# Выделение выбранной квартиры в таблице
+competitors_data.loc[competitors_data['id'] == selected_flat_id, 'Selected'] = 'Selected'
+
+# Отображение таблицы
+st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
+
+# Карта конкурентов в радиусе 1500 метров
+st.subheader('Карта конкурентов в радиусе 1500 метров')
+m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
+
+# Перебор всех квартир и добавление маркеров в радиусе 1500 метров
+for index, flat in competitors_data.iterrows():
+    # Определение цвета маркера для выбранной квартиры
+    marker_color = 'red' if flat['id'] == selected_flat_id else 'blue'
+    
+    popup_text = f"{flat['city']}, {flat['price_sq']} руб/м²"
+    
+    # Добавление маркера на карту
+    marker = folium.Marker([flat['lat'], flat['lon']],
+                          popup=popup_text,
+                          tooltip=popup_text,
+                          icon=folium.Icon(color=marker_color),
+                          auto_open=True)
+    
+    # Связь маркера с таблицей
+    marker.add_child(folium.Div(f"Квартира {flat['id']}"))
+    
+    # Добавление маркера на карту
+    m.add_child(marker)
+
+# Отображение карты
+folium_static(m)
