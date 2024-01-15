@@ -110,64 +110,12 @@ st.markdown("---")
 
 st.subheader('Анализ стоимости квартиры')
 # График цен за квадратный метр
-chart, ax = plt.subplots(figsize=(10, 5))
-
-# Фоновый график для всех квартир
-sns.stripplot(
-    data=data,
-    y='price_sq',
-    color='white',
-    jitter=0.3,
-    size=10,
-    linewidth=1,
-    edgecolor='gainsboro',
-    alpha=0.7
-)
-
-# Выделение выбранной квартиры
-sns.stripplot(
-    data=data[data['id'] == selected_flat_id],
-    y='price_sq',
-    color='red',
-    size=12,
-    linewidth=1,
-    edgecolor='black',
-    label=f'Selected Flat {selected_flat_id}'
-)
-
-# Оформление графика
-avg_price_m2 = data['price_sq'].median()
-q1_price_m2 = data['price_sq'].quantile(0.25)
-q3_price_m2 = data['price_sq'].quantile(0.75)
-
-ax.axhline(y=avg_price_m2, color='#DA70D6', linestyle='--', lw=0.75)
-ax.axhline(y=q1_price_m2, color='white', linestyle='--', lw=0.75)
-ax.axhline(y=q3_price_m2, color='white', linestyle='--', lw=0.75)
-
-ax.text(1.15, q1_price_m2, 'Q1', ha='center', va='center', color='white', fontsize=8, fontweight='bold')
-ax.text(1.35, avg_price_m2, 'Median', ha='center', va='center', color='#DA70D6', fontsize=8, fontweight='bold')
-ax.text(1.15, q3_price_m2, 'Q3', ha='center', va='center', color='white', fontsize=8, fontweight='bold')
-ax.fill_betweenx([q1_price_m2, q3_price_m2], -2, 1, alpha=0.2, color='gray')
-ax.set_xlim(-1, 1)
-
-# Отображение графика
-ax.set_ylabel('Стоимость квартиры за квадратный метр (R$)')
-ax.set_title('Стоимость выбранной квартиры за квадратный метр')
-ax.legend()
-st.pyplot(chart)
 
 # Разделение между графиком и таблицей
 st.markdown("---")
 
-
-
 # Выберите квартиру и получите соответствующие данные
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
-
-# Создание графика
-
-# Plot selected flat price and predicted price against prices of all flats
-
 
 st.markdown("---")
 
@@ -190,36 +138,6 @@ st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'S
 # Карта конкурентов в радиусе 1500 метров
 st.subheader('Карта конкурентов в радиусе 1500 метров')
 m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
-
-# Перебор всех квартир и добавление маркеров в радиусе 1500 метров
-for index, flat in competitors_data.iterrows():
-    # Определение цвета маркера для выбранной квартиры
-    marker_color = 'red' if flat['id'] == selected_flat_id else 'blue'
-    
-    folium.Marker([flat['lat'], flat['lon']],
-                  popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
-                  tooltip=f"{flat['city']}, {flat['price_sq']} руб/м²",
-                  icon=folium.Icon(color=marker_color),
-                  auto_open=True).add_to(m)
-
-# Отображение карты
-folium_static(m)
-
-
-# Карта конкурентов в радиусе 1500 метров
-st.subheader('Карта конкурентов в радиусе 1500 метров')
-
-# Использование Yandex Maps
-m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']],
-               zoom_start=14,
-               tiles='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-               attr='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, '
-                    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, '
-                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-               width=1000,
-               height=600)
-m.add_child(folium.TileLayer(tiles='https://maps.yandex.ru/tiles/base/{z}/{x}/{y}.png',
-                             attr='&copy; <a href="https://yandex.ru/legal/termsofuse/" target="_blank">Яндекс</a>'))
 
 # Перебор всех квартир и добавление маркеров в радиусе 1500 метров
 for index, flat in competitors_data.iterrows():
