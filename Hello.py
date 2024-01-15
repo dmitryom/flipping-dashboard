@@ -160,9 +160,6 @@ competitors_data['Selected'] = False
 def highlight_row(row):
     competitors_data.loc[row.name,'Selected'] = True
 
-
-st.write(competitors_table)
-
 # Карта с подсветкой выбранной квартиры
 m = folium.Map(location=[55.75, 37.57], tiles='Stamen Toner', zoom_start=11)
 
