@@ -127,7 +127,7 @@ competitors_data.loc[competitors_data['id'] == selected_flat_id, 'Selected'] = '
 
 # Отображение таблицы
 st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
-st.dataframe(style.highlight_max(axis=0))
+st.dataframe(Selected.style.highlight_max(axis=0))
 # Карта конкурентов в радиусе 1500 метров
 st.subheader('Карта конкурентов в радиусе 1500 метров')
 m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
