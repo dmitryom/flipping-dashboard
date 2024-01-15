@@ -126,11 +126,6 @@ competitors_data = competitors_data[competitors_data['Distance (meters)'] <= 150
 competitors_data.loc[competitors_data['id'] == selected_flat_id, 'Selected'] = 'Selected'
 st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
 
-# Применяем функцию к DataFrame
-styled_data = competitors_data.style.apply(highlight_selected, axis=1)
-
-# Отображаем стилизованный DataFrame
-st.dataframe(styled_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True), unsafe_allow_html=True)
 # Карта конкурентов в радиусе 1500 метров
 st.subheader('Карта конкурентов в радиусе 1500 метров')
 m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
