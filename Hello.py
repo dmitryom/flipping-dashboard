@@ -145,31 +145,3 @@ for index, flat in competitors_data.iterrows():
 
 # Отображение карты
 folium_static(m)
-
-# Таблица конкурентов в радиусе 1500 метров
-competitors_data = filtered_data.copy()
-competitors_data['Distance'] = competitors_data.apply(
-    lambda row: geodesic((row['lat'], row['lon']), 
-                         (selected_flat['lat'], selected_flat['lon'])).km,
-                         axis=1)
-
-competitors_data = competitors_data[competitors_data['Distance'] <= 1.5]
-competitors_data['Selected'] = False
-
-# Выделение строки в таблице 
-def highlight_row(row):
-    competitors_data.loc[row.name,'Selected'] = True
-
-# Карта с подсветкой выбранной квартиры
-m = folium.Map(location=[55.75, 37.57], tiles='Stamen Toner', zoom_start=11)
-
-for index, flat in competitors_data.iterrows():
-    location = [flat['lat'], flat['lon']]
-    color = 'red' if flat['Selected'] else 'blue'
-    tooltip = f"{flat['city']}, {flat['price']}"
-    
-    m.add_child(folium.Marker(location=location, 
-                              popup=tooltip,
-                              icon=folium.Icon(color=color)))
-
-folium_static(m)
