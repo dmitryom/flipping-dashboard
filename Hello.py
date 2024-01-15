@@ -124,21 +124,7 @@ competitors_data = competitors_data[competitors_data['Distance (meters)'] <= 150
 
 # Выделение выбранного объекта недвижимости в таблице
 competitors_data.loc[competitors_data['id'] == selected_flat_id, 'Selected'] = 'Selected'
-# Определение стилей для выделения цветом
-def highlight_distance(row):
-    if row['Selected'] == 'Selected':
-        return ['background-color: yellow'] * len(row)
-    elif row['Distance (meters)'] <= 1500:
-        return ['background-color: lightblue'] * len(row)
-    else:
-        return [''] * len(row)
-
-# Применение стилей к DataFrame
-styled_competitors_data = competitors_data.style.apply(highlight_distance, axis=1)
 st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
-# Отображение стилизованной таблицы
-st.dataframe(styled_competitors_data)
-
 
 # Карта конкурентов в радиусе 1500 метров
 st.subheader('Карта конкурентов в радиусе 1500 метров')
