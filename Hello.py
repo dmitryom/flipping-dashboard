@@ -124,7 +124,7 @@ competitors_data = competitors_data[competitors_data['Distance (meters)'] <= 150
 
 # Выделение выбранного объекта недвижимости в таблице
 competitors_data.loc[competitors_data['id'] == selected_flat_id, 'Selected'] = 'Selected'
-#st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
+st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
 # Определяем функцию для выделения строки
 def highlight_selected(s):
     if s['Selected'] == 'Selected':
