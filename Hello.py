@@ -160,7 +160,6 @@ competitors_data['Selected'] = False
 def highlight_row(row):
     competitors_data.loc[row.name,'Selected'] = True
 
-competitors_table = competitors_data[['id', 'city', 'price', 'Distance', 'Selected']]  
 
 competitors_table.style.apply(highlight_row,axis=1)
 st.write(competitors_table)
