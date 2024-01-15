@@ -142,4 +142,4 @@ for index, flat in competitors_data.iterrows():
                   auto_open=True).add_to(m)
 
 # Отображение карты
-folium_static(m, width=auto)
+folium_static(m, layout='wide')
