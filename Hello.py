@@ -161,7 +161,6 @@ def highlight_row(row):
     competitors_data.loc[row.name,'Selected'] = True
 
 
-competitors_table.style.apply(highlight_row,axis=1)
 st.write(competitors_table)
 
 # Карта с подсветкой выбранной квартиры
