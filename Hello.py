@@ -204,3 +204,33 @@ for index, flat in competitors_data.iterrows():
 
 # Отображение карты
 folium_static(m)
+
+
+# Карта конкурентов в радиусе 1500 метров
+st.subheader('Карта конкурентов в радиусе 1500 метров')
+
+# Использование Yandex Maps
+m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']],
+               zoom_start=14,
+               tiles='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+               attr='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, '
+                    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, '
+                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+               width=1000,
+               height=600)
+m.add_child(folium.TileLayer(tiles='https://maps.yandex.ru/tiles/base/{z}/{x}/{y}.png',
+                             attr='&copy; <a href="https://yandex.ru/legal/termsofuse/" target="_blank">Яндекс</a>'))
+
+# Перебор всех квартир и добавление маркеров в радиусе 1500 метров
+for index, flat in competitors_data.iterrows():
+    # Определение цвета маркера для выбранной квартиры
+    marker_color = 'red' if flat['id'] == selected_flat_id else 'blue'
+    
+    folium.Marker([flat['lat'], flat['lon']],
+                  popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
+                  tooltip=f"{flat['city']}, {flat['price_sq']} руб/м²",
+                  icon=folium.Icon(color=marker_color),
+                  auto_open=True).add_to(m)
+
+# Отображение карты
+folium_static(m)
