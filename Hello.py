@@ -170,45 +170,34 @@ html_template = f"""
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-    <script crossorigin src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
-    <!-- To make the map appear, you must add your apikey -->
-    <script src="https://api-maps.yandex.ru/v3/?apikey=14a66a7c-9302-4fbb-9102-44edd5c98dc2&lang=en_US" type="text/javascript"></script>
+    <title>Быстрый старт. Размещение интерактивной карты на странице</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://api-maps.yandex.ru/v3/?apikey=14a66a7c-9302-4fbb-9102-44edd5c98dc2&lang=ru_RU"></script>
+    <script>
+        initMap();
 
-    <script
-      data-plugins="transform-modules-umd"
-      data-presets="typescript"
-      type="text/babel"
-      src="./common.ts"
-    ></script>
-    <script data-plugins="transform-modules-umd" data-presets="typescript" type="text/babel">
-      import {LOCATION} from './common';
+        async function initMap() {
+            await ymaps3.ready;
 
-      window.map = null;
+            const {YMap, YMapDefaultSchemeLayer} = ymaps3;
 
-      main();
-      async function main() {
-        // Waiting for all api elements to be loaded
-        await ymaps3.ready;
-        const {YMap, YMapDefaultSchemeLayer} = ymaps3;
-        // Initialize the map
-        map = new YMap(
-          // Pass the link to the HTMLElement of the container
-          document.getElementById('app'),
-          // Pass the map initialization parameters
-          {location: LOCATION},
-          // Add a map scheme layer
-          [new YMapDefaultSchemeLayer({})]
-        );
-      }
+            const map = new YMap(
+                document.getElementById('map'),
+                {
+                    location: {
+                        center: [37.588144, 55.733842],
+                        zoom: 10
+                    }
+                }
+            );
+
+            map.addChild(new YMapDefaultSchemeLayer());
+        }
     </script>
-
-    <!-- prettier-ignore -->
-    <style> html, body, #app { width: 100%; height: 100%; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; } .toolbar { position: absolute; z-index: 1000; top: 0; left: 0; display: flex; align-items: center; padding: 16px; } .toolbar a { padding: 16px; }  </style>
   </head>
+
   <body>
-    <div id="app"></div>
+    <div id="map" style="width: 600px; height: 400px"></div>
   </body>
 </html>
 
