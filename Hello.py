@@ -63,10 +63,6 @@ def style_metric_cards(
         """,
         unsafe_allow_html=True,
     )
-# components
-dash_1 = st.container()
-dash_2 = st.container()
-
 
 
 # Загрузка данных из CSV___
@@ -108,6 +104,9 @@ expected_sale_price = selected_flat['predicted_price']
 total_expenses = selected_flat['price_sq'] + renovation_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
+# components
+dash_1 = st.container()
+dash_2 = st.container()
 
 with dash_1:
     col1, col2, col3, col4 = st.columns(4)
