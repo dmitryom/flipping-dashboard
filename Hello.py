@@ -207,7 +207,7 @@ yandex_map_html = f"""
       function init() {{
         var map = new ymaps.Map('app', {{
           center: {location_yandex_map},
-          zoom: 15
+          zoom: 13
         }});
 
         // Add a marker for the selected property with red balloon
