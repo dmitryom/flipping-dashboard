@@ -92,7 +92,7 @@ col2.metric(
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.subheader(f'Характеристики')
+    st.subheader(f'1. Характеристики')
     st.write(f'* Комнат: {selected_flat["rooms"]}')
     st.write(f'* Общая площадь: {selected_flat["area"]}')
     st.write(f'* Жилая площадь: {selected_flat["all_data.livingArea"]}')
@@ -103,7 +103,7 @@ with col1:
     st.write(f'* Материал дома: {selected_flat["house_wall_type"]}')
     st.write(f'* Год постройки: {selected_flat["build_year"]}')
 with col2:
-    st.subheader(f'Финансовые показатели')
+    st.subheader(f'2. Финансовые показатели')
     # Отображение результатов
     st.write(f'* Цена входа: {selected_flat["bargainTerms.price"]} руб.')
     st.write(f'* Цена выхода потенциальная: {expected_sale_price * selected_flat["area"]} руб.')
@@ -112,7 +112,7 @@ with col2:
     st.write(f'* Общие затраты: {total_expenses} руб.')
     st.write(f'* Прибыль: {profit} руб.')
 
-#st.subheader('Анализ стоимости объекта недвижимости')
+st.subheader(f'3. Анализ стоимости объекта недвижимости')
 # График цен за квадратный метр
 
 # Выберите квартиру и получите соответствующие данные
