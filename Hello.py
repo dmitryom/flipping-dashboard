@@ -145,11 +145,7 @@ with tab2:
         # Calculate the price difference
     competitors_data['Price Difference'] = competitors_data['price_sq'] - selected_flat['price_sq']
     # Display the table with the new column
-    st.dataframe(competitors_data[['id', 'city','street','address', 'price_sq', 'rooms','area', 'kitchen_area','renovation','floor','house_floors','Distance (meters)', 'Price Difference','Selected' ]].reset_index(drop=True))
-
-
-#Адрес	Комнат	Общая	Кухня	Ремонт	Этаж	Этажей	Материал Год	Пешком до метро, мин	Цена	Цена/м²
-
+    st.dataframe(competitors_data[['city','street','address', 'rooms','area', 'kitchen_area','renovation','floor','house_floors','house_wall_type','build_year','time_on_foot_to_subway','Distance (meters)','price_sq','bargainTerms.price','Price Difference','Selected']].reset_index(drop=True))
 
 
 with tab1:
