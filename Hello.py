@@ -218,6 +218,7 @@ yandex_map_html = f"""
             balloonContentFooter: 'Click for details',
             iconColor: 'red'
         }});
+        selectedMarker.options.set("iconColor", "red");
         map.geoObjects.add(selectedMarker);
 
         // Add markers for competitors
