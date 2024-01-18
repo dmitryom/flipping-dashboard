@@ -57,7 +57,9 @@ def style_metric_cards(
         """,
         unsafe_allow_html=True,
     )
-
+# components
+dash_1 = st.container()
+dash_2 = st.container()
 
 # Установка параметров страницы для отображения во весь экран
 st.set_page_config(layout='wide')
@@ -102,13 +104,13 @@ total_expenses = selected_flat['price_sq'] + renovation_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
 
-
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("🔄 ROI","20%", "4%")
-col2.metric("🚌 Индекс транспортной доступности", "5", "10")
-col3.metric("📍 Индекс доступности инфраструктуры", "6", "10")
-col4.metric("📊 Тренд", "4%", "100%")
-style_metric_cards(border_left_color="#DBF227")
+with dash_1:
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("🔄 ROI","20%", "4%")
+    col2.metric("🚌 Индекс транспортной доступности", "5", "10")
+    col3.metric("📍 Индекс доступности инфраструктуры", "6", "10")
+    col4.metric("📊 Тренд", "4%", "100%")
+    style_metric_cards(border_left_color="#DBF227")
 
 
 col1, col2, col3, col4 = st.columns(4)
