@@ -11,3 +11,4 @@ streamlit_folium
 geopy
 matplotlib
 seaborn
+streamlit_extras
