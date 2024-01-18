@@ -212,7 +212,6 @@ yandex_map_html = f"""
 
         // Add a marker for the selected property with red balloon
         var selectedMarker = new ymaps.Placemark([ {location_yandex_map[0]}, {location_yandex_map[1]} ], {{
-            iconContent: 'Щелкни по мне правой кнопкой мыши!',
             preset: 'islands#redStretchyIcon',
             iconContent: "Узнать адрес",
             hintContent: "Перетащите метку и кликните, чтобы узнать адрес"
@@ -222,8 +221,6 @@ yandex_map_html = f"""
             balloonContentFooter: 'Click for details',
             iconColor: 'red'
         }});
-        selectedMarker.options.set("iconColor", "red");
-        map.geoObjects.add(selectedMarker);
 
         // Add markers for competitors
         var competitorsData = {competitors_data[['lat', 'lon', 'id', 'price_sq']].to_json(orient='records', date_format='iso')};
