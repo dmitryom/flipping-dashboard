@@ -210,16 +210,26 @@ yandex_map_html = f"""
           zoom: 10
         }});
 
-        // Add a marker for the selected property
-        var selectedMarker = new ymaps.Placemark([ {location_yandex_map[0]}, {location_yandex_map[1]} ], {{ balloonContent: 'Selected Property' }});
+        // Add a marker for the selected property with red balloon
+        var selectedMarker = new ymaps.Placemark([ {location_yandex_map[0]}, {location_yandex_map[1]} ], {{
+            balloonContent: '<strong>Selected Property</strong><br/>Cost per sq.m.: {selected_flat["price_sq"]} rub',
+            balloonContentHeader: 'Selected Property',
+            balloonContentBody: 'Cost per sq.m.: {selected_flat["price_sq"]} rub',
+            balloonContentFooter: 'Click for details'
+        }});
         map.geoObjects.add(selectedMarker);
 
         // Add markers for competitors
-        var competitorsData = {competitors_data[['lat', 'lon', 'id']].to_json(orient='records', date_format='iso')};
+        var competitorsData = {competitors_data[['lat', 'lon', 'id', 'price_sq']].to_json(orient='records', date_format='iso')};
         for (var i = 0; i < competitorsData.length; i++) {{
             var competitorMarker = new ymaps.Placemark(
                 [competitorsData[i]['lat'], competitorsData[i]['lon']],
-                {{ balloonContent: 'Competitor Property' + competitorsData[i]['id'] }}
+                {{
+                    balloonContent: '<strong>Competitor Property</strong><br/>Cost per sq.m.: ' + competitorsData[i]['price_sq'] + ' rub',
+                    balloonContentHeader: 'Competitor Property ' + competitorsData[i]['id'],
+                    balloonContentBody: 'Cost per sq.m.: ' + competitorsData[i]['price_sq'] + ' rub',
+                    balloonContentFooter: 'Click for details'
+                }}
             );
             map.geoObjects.add(competitorMarker);
         }}
@@ -233,4 +243,3 @@ yandex_map_html = f"""
 
 # Display the updated map in the Streamlit app
 components.html(yandex_map_html, height=600)
-
