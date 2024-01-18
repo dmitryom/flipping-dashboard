@@ -173,9 +173,9 @@ import streamlit.components.v1 as components
 YOUR_APIKEY = "14a66a7c-9302-4fbb-9102-44edd5c98dc2"
 
 # Define the initial location for the map
-LOCATION = [55.751244, 37.618423]  # Example: Coordinates of Moscow
+location_yandex_map = [selected_flat['lat'], selected_flat['lon']]
 
-# Create the HTML for the Yandex Map
+# HTML code for Yandex Map
 yandex_map_html = f"""
 <!DOCTYPE html>
 <html>
@@ -201,9 +201,27 @@ yandex_map_html = f"""
       ymaps.ready(init);
       function init() {{
         var map = new ymaps.Map('app', {{
-          center: {LOCATION},
+          center: {location_yandex_map},
           zoom: 10
         }});
+
+        // Add a marker for the selected property
+        var selectedMarker = new ymaps.Placemark({{ coordinates: {location_yandex_map}, balloonContent: 'Selected Property' }});
+        map.geoObjects.add(selectedMarker);
+
+        // Add markers for competitors
+        var competitors = [
+            {competitors_data[['lat', 'lon']].to_dict(orient='records')}
+        ];
+
+        for (var i = 0; i < competitors.length; i++) {{
+            var competitorMarker = new ymaps.Placemark(
+                {{"latitude": competitors[i]['lat'], "longitude": competitors[i]['lon']}},
+                {{ balloonContent: 'Competitor Property' }}
+            );
+            map.geoObjects.add(competitorMarker);
+        }}
+
         // You can add more features and controls to the map here.
       }}
     </script>
@@ -211,5 +229,5 @@ yandex_map_html = f"""
 </html>
 """
 
-# Display the map in the Streamlit app
+# Display the updated map in the Streamlit app
 components.html(yandex_map_html, height=600)
