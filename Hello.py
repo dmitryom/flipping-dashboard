@@ -215,7 +215,8 @@ yandex_map_html = f"""
             balloonContent: '<strong>Selected Property</strong><br/>Cost per sq.m.: {selected_flat["price_sq"]} rub',
             balloonContentHeader: 'Selected Property',
             balloonContentBody: 'Cost per sq.m.: {selected_flat["price_sq"]} rub',
-            balloonContentFooter: 'Click for details'
+            balloonContentFooter: 'Click for details',
+            iconColor: 'red'
         }});
         map.geoObjects.add(selectedMarker);
 
