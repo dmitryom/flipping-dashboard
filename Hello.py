@@ -213,29 +213,3 @@ yandex_map_html = f"""
 
 # Display the map in the Streamlit app
 components.html(yandex_map_html, height=600)
-def generate_placemarks_js(competitors_data):
-    js = ""
-    for index, flat in competitors_data.iterrows():
-        # Определение цвета маркера
-        color = 'red' if flat['id'] == selected_flat_id else 'blue'
-        # Добавление маркера на карту
-        js += f"""
-        var placemark = new ymaps.Placemark([{flat['lat']}, {flat['lon']}], {{
-            hintContent: '{flat['city']}, {flat['price_sq']} руб/м²',
-            balloonContent: '{flat['city']}, {flat['price_sq']} руб/м²'
-        }}, {{
-            iconColor: '{color}'
-        }});
-        myMap.geoObjects.add(placemark);
-        """
-    return js
-
-# Вызываем функцию для генерации JavaScript-кода меток
-placemarks_js = generate_placemarks_js(competitors_data)
-
-# Заменяем плейсхолдер в HTML шаблоне на реальный JavaScript код
-final_html = html_template.format(center_location=center_location, generate_placemarks_js=placemarks_js)
-
-# Отображение карты
-st.subheader('Карта конкурентов в радиусе 1500 метров')
-components.html(final_html, height=600, width=1000)
