@@ -145,7 +145,35 @@ with tab2:
         # Calculate the price difference
     competitors_data['Price Difference'] = competitors_data['price_sq'] - selected_flat['price_sq']
     # Display the table with the new column
-    st.dataframe(competitors_data[['city','street','address', 'rooms','area', 'kitchen_area','renovation','floor','house_floors','house_wall_type','build_year','time_on_foot_to_subway','Distance (meters)','price_sq','bargainTerms.price','Price Difference','Selected']].reset_index(drop=True))
+
+    translated_columns = {
+            'city': 'Город',
+            'street': 'Улица',
+            'address': 'Адрес',
+            'rooms': 'Комнаты',
+            'area': 'Общая площадь',
+            'kitchen_area': 'Площадь кухни',
+            'renovation': 'Ремонт',
+            'floor': 'Этаж',
+            'house_floors': 'Этажей в доме',
+            'house_wall_type': 'Материал дома',
+            'build_year': 'Год постройки',
+            'time_on_foot_to_subway': 'Время пешком до метро',
+            'Distance (meters)': 'Расстояние (метры)',
+            'price_sq': 'Цена за кв.м.',
+            'bargainTerms.price': 'Цена входа',
+            'Price Difference': 'Разница в цене за кв.м.',
+            'Selected': 'Выбрано'
+        }
+    competitors_data = competitors_data.rename(columns=translated_columns)
+
+    st.dataframe(competitors_data[
+                      ['Город', 'Улица', 'Адрес', 'Комнаты', 'Общая площадь', 'Площадь кухни', 'Ремонт', 'Этаж',
+                       'Этажей в доме', 'Материал дома', 'Год постройки', 'Время пешком до метро', 'Расстояние (метры)',
+                       'Цена за кв.м.', 'Цена входа', 'Разница в цене', 'Выбрано']].reset_index(drop=True))
+
+
+    #st.dataframe(competitors_data[['city','street','address', 'rooms','area', 'kitchen_area','renovation','floor','house_floors','house_wall_type','build_year','time_on_foot_to_subway','Distance (meters)','price_sq','bargainTerms.price','Price Difference','Selected']].reset_index(drop=True))
 
 
 with tab1:
