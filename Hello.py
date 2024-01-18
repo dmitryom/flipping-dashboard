@@ -175,6 +175,11 @@ YOUR_APIKEY = "14a66a7c-9302-4fbb-9102-44edd5c98dc2"
 # Define the initial location for the map
 location_yandex_map = [selected_flat['lat'], selected_flat['lon']]
 
+# Yandex Map Integration
+st.subheader('Yandex Map Integration')
+# Define the initial location for the map
+location_yandex_map = [selected_flat['lat'], selected_flat['lon']]
+
 # HTML code for Yandex Map
 yandex_map_html = f"""
 <!DOCTYPE html>
@@ -206,18 +211,15 @@ yandex_map_html = f"""
         }});
 
         // Add a marker for the selected property
-        var selectedMarker = new ymaps.Placemark({{ coordinates: {location_yandex_map}, balloonContent: 'Selected Property' }});
+        var selectedMarker = new ymaps.Placemark([ {location_yandex_map[0]}, {location_yandex_map[1]} ], {{ balloonContent: 'Selected Property' }});
         map.geoObjects.add(selectedMarker);
 
         // Add markers for competitors
-        var competitors = [
-            {competitors_data[['lat', 'lon']].to_dict(orient='records')}
-        ];
-
-        for (var i = 0; i < competitors.length; i++) {{
+        var competitorsData = {competitors_data[['lat', 'lon', 'id']].to_json(orient='records', date_format='iso')};
+        for (var i = 0; i < competitorsData.length; i++) {{
             var competitorMarker = new ymaps.Placemark(
-                {{"latitude": competitors[i]['lat'], "longitude": competitors[i]['lon']}},
-                {{ balloonContent: 'Competitor Property' }}
+                [competitorsData[i]['lat'], competitorsData[i]['lon']],
+                {{ balloonContent: 'Competitor Property' + competitorsData[i]['id'] }}
             );
             map.geoObjects.add(competitorMarker);
         }}
@@ -231,3 +233,4 @@ yandex_map_html = f"""
 
 # Display the updated map in the Streamlit app
 components.html(yandex_map_html, height=600)
+
