@@ -124,124 +124,130 @@ with col2:
 st.subheader(f'3. Анализ стоимости объекта недвижимости')
 # График цен за квадратный метр
 
+
+st.markdown("---")
+tab1, tab2 = st.tabs(["Карта конкурентов в радиусе 1500 метров", "Таблица конкурентов в радиусе 1500 метров"])
+
+tab1.subheader("Карта конкурентов в радиусе 1500 метров")
+tab2.subheader("Таблица конкурентов в радиусе 1500 метров")
+
 # Выберите квартиру и получите соответствующие данные
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 
-st.markdown("---")
+with tab2:
+    # Таблица конкурентов в радиусе 1500 метров
+    st.subheader('Таблица конкурентов в радиусе 1500 метров')
+    # Фильтрация данных для отображения только конкурентов в радиусе 1500 метров
+    competitors_data = filtered_data.copy()
+    competitors_data['Distance (meters)'] = competitors_data.apply(
+        lambda row: geodesic((row['lat'], row['lon']), (selected_flat['lat'], selected_flat['lon'])).meters,
+        axis=1
+    )
+    competitors_data = competitors_data[competitors_data['Distance (meters)'] <= 1500]
+    # Выделение выбранного объекта недвижимости в таблице
+    competitors_data.loc[competitors_data['id'] == selected_flat_id, 'Selected'] = 'Selected'
+    st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
 
-# Таблица конкурентов в радиусе 1500 метров
-st.subheader('Таблица конкурентов в радиусе 1500 метров')
-# Фильтрация данных для отображения только конкурентов в радиусе 1500 метров
-competitors_data = filtered_data.copy()
-competitors_data['Distance (meters)'] = competitors_data.apply(
-    lambda row: geodesic((row['lat'], row['lon']), (selected_flat['lat'], selected_flat['lon'])).meters,
-    axis=1
-)
-competitors_data = competitors_data[competitors_data['Distance (meters)'] <= 1500]
+with tab1:
+    # Карта конкурентов в радиусе 1500 метров
+    st.subheader('Карта конкурентов в радиусе 1500 метров')
+    m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
 
-# Выделение выбранного объекта недвижимости в таблице
-competitors_data.loc[competitors_data['id'] == selected_flat_id, 'Selected'] = 'Selected'
-st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
+    # Перебор всех объектов недвижимости и добавление маркеров в радиусе 1500 метров
+    for index, flat in competitors_data.iterrows():
+        # Определение цвета маркера для выбранной объекта недвижимости
+        marker_color = 'red' if flat['id'] == selected_flat_id else 'blue'
+        
+        folium.Marker([flat['lat'], flat['lon']],
+                    popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
+                    tooltip=f"{flat['city']}, {flat['price_sq']} руб/м²",
+                    icon=folium.Icon(color=marker_color),
+                    auto_open=True).add_to(m)
 
-# Карта конкурентов в радиусе 1500 метров
-st.subheader('Карта конкурентов в радиусе 1500 метров')
-m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
-
-# Перебор всех объектов недвижимости и добавление маркеров в радиусе 1500 метров
-for index, flat in competitors_data.iterrows():
-    # Определение цвета маркера для выбранной объекта недвижимости
-    marker_color = 'red' if flat['id'] == selected_flat_id else 'blue'
-    
-    folium.Marker([flat['lat'], flat['lon']],
-                  popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
-                  tooltip=f"{flat['city']}, {flat['price_sq']} руб/м²",
-                  icon=folium.Icon(color=marker_color),
-                  auto_open=True).add_to(m)
-
-# Отображение карты
-folium_static(m, width=1000, height=600)
+    # Отображение карты
+    folium_static(m, width=1000, height=600)
 
 
-# Название и координаты для центра карты
-center_location = [selected_flat['lat'], selected_flat['lon']]
+    # Название и координаты для центра карты
+    center_location = [selected_flat['lat'], selected_flat['lon']]
 
-# Создание HTML-код для встраивания Yandex Карты
-import streamlit as st
-import streamlit.components.v1 as components
+    # Создание HTML-код для встраивания Yandex Карты
+    import streamlit as st
+    import streamlit.components.v1 as components
 
-# Define your Yandex API key
-YOUR_APIKEY = "14a66a7c-9302-4fbb-9102-44edd5c98dc2"
+    # Define your Yandex API key
+    YOUR_APIKEY = "14a66a7c-9302-4fbb-9102-44edd5c98dc2"
 
-# Define the initial location for the map
-location_yandex_map = [selected_flat['lat'], selected_flat['lon']]
+    # Define the initial location for the map
+    location_yandex_map = [selected_flat['lat'], selected_flat['lon']]
 
-# Yandex Map Integration
-st.subheader('Yandex Map Integration')
-# Define the initial location for the map
-location_yandex_map = [selected_flat['lat'], selected_flat['lon']]
+    # Yandex Map Integration
+    st.subheader('Yandex Map Integration')
+    # Define the initial location for the map
+    location_yandex_map = [selected_flat['lat'], selected_flat['lon']]
 
-# HTML code for Yandex Map
-yandex_map_html = f"""
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-    <script src="https://api-maps.yandex.ru/2.1/?apikey={YOUR_APIKEY}&lang=en_US" type="text/javascript"></script>
-    <style>
-      html, body, #app {{
-        width: 100%; height: 100%; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;
-      }}
-      .toolbar {{
-        position: absolute; z-index: 1000; top: 0; left: 0; display: flex; align-items: center; padding: 16px;
-      }}
-      .toolbar a {{
-        padding: 16px;
-      }}
-    </style>
-  </head>
-  <body>
-    <div id="app" style="width: 100%; height: 600px;"></div>
-    <script>
-      ymaps.ready(init);
-      function init() {{
-        var map = new ymaps.Map('app', {{
-          center: {location_yandex_map},
-          zoom: 13
-        }});
-
-        // Add a marker for the selected property with red balloon
-        var selectedMarker = new ymaps.Placemark([ {location_yandex_map[0]}, {location_yandex_map[1]} ], {{
-            balloonContent: '<strong>Selected Property</strong><br/>Cost per sq.m.: {selected_flat["price_sq"]} rub',
-            balloonContentHeader: 'Selected Property',
-            balloonContentBody: 'Cost per sq.m.: {selected_flat["price_sq"]} rub',
-            balloonContentFooter: 'Click for details',
-            iconColor: 'red'
-        }});
-        selectedMarker.options.set("iconColor", "red");
-        map.geoObjects.add(selectedMarker);
-
-        // Add markers for competitors
-        var competitorsData = {competitors_data[['lat', 'lon', 'id', 'price_sq']].to_json(orient='records', date_format='iso')};
-        for (var i = 0; i < competitorsData.length; i++) {{
-            var competitorMarker = new ymaps.Placemark(
-                [competitorsData[i]['lat'], competitorsData[i]['lon']],
-                {{
-                    balloonContent: '<strong>Competitor Property</strong><br/>Cost per sq.m.: ' + competitorsData[i]['price_sq'] + ' rub',
-                    balloonContentHeader: 'Competitor Property ' + competitorsData[i]['id'],
-                    balloonContentBody: 'Cost per sq.m.: ' + competitorsData[i]['price_sq'] + ' rub',
-                    balloonContentFooter: 'Click for details'
-                }}
-            );
-            map.geoObjects.add(competitorMarker);
+    # HTML code for Yandex Map
+    yandex_map_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+        <script src="https://api-maps.yandex.ru/2.1/?apikey={YOUR_APIKEY}&lang=en_US" type="text/javascript"></script>
+        <style>
+        html, body, #app {{
+            width: 100%; height: 100%; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;
         }}
+        .toolbar {{
+            position: absolute; z-index: 1000; top: 0; left: 0; display: flex; align-items: center; padding: 16px;
+        }}
+        .toolbar a {{
+            padding: 16px;
+        }}
+        </style>
+    </head>
+    <body>
+        <div id="app" style="width: 100%; height: 600px;"></div>
+        <script>
+        ymaps.ready(init);
+        function init() {{
+            var map = new ymaps.Map('app', {{
+            center: {location_yandex_map},
+            zoom: 13
+            }});
 
-        // You can add more features and controls to the map here.
-      }}
-    </script>
-  </body>
-</html>
-"""
+            // Add a marker for the selected property with red balloon
+            var selectedMarker = new ymaps.Placemark([ {location_yandex_map[0]}, {location_yandex_map[1]} ], {{
+                balloonContent: '<strong>Selected Property</strong><br/>Cost per sq.m.: {selected_flat["price_sq"]} rub',
+                balloonContentHeader: 'Selected Property',
+                balloonContentBody: 'Cost per sq.m.: {selected_flat["price_sq"]} rub',
+                balloonContentFooter: 'Click for details',
+                iconColor: 'red'
+            }});
+            selectedMarker.options.set("iconColor", "red");
+            map.geoObjects.add(selectedMarker);
 
-# Display the updated map in the Streamlit app
-components.html(yandex_map_html, height=600)
+            // Add markers for competitors
+            var competitorsData = {competitors_data[['lat', 'lon', 'id', 'price_sq']].to_json(orient='records', date_format='iso')};
+            for (var i = 0; i < competitorsData.length; i++) {{
+                var competitorMarker = new ymaps.Placemark(
+                    [competitorsData[i]['lat'], competitorsData[i]['lon']],
+                    {{
+                        balloonContent: '<strong>Competitor Property</strong><br/>Cost per sq.m.: ' + competitorsData[i]['price_sq'] + ' rub',
+                        balloonContentHeader: 'Competitor Property ' + competitorsData[i]['id'],
+                        balloonContentBody: 'Cost per sq.m.: ' + competitorsData[i]['price_sq'] + ' rub',
+                        balloonContentFooter: 'Click for details'
+                    }}
+                );
+                map.geoObjects.add(competitorMarker);
+            }}
+
+            // You can add more features and controls to the map here.
+        }}
+        </script>
+    </body>
+    </html>
+    """
+
+    # Display the updated map in the Streamlit app
+    components.html(yandex_map_html, height=600)
