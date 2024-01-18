@@ -142,7 +142,11 @@ with tab2:
     competitors_data = competitors_data[competitors_data['Distance (meters)'] <= 1500]
     # Выделение выбранного объекта недвижимости в таблице
     competitors_data.loc[competitors_data['id'] == selected_flat_id, 'Selected'] = 'Selected'
-    st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected']].reset_index(drop=True))
+        # Calculate the price difference
+    competitors_data['Price Difference'] = competitors_data['price_sq'] - selected_flat['price_sq']
+    # Display the table with the new column
+    st.dataframe(competitors_data[['id', 'city', 'price_sq', 'Distance (meters)', 'Selected', 'Price Difference']].reset_index(drop=True))
+
 
 with tab1:
     # Карта конкурентов в радиусе 1500 метров
