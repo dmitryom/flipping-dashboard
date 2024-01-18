@@ -212,9 +212,6 @@ yandex_map_html = f"""
 
         // Add a marker for the selected property with red balloon
         var selectedMarker = new ymaps.Placemark([ {location_yandex_map[0]}, {location_yandex_map[1]} ], {{
-            preset: 'islands#redStretchyIcon',
-            iconContent: "Узнать адрес",
-            hintContent: "Перетащите метку и кликните, чтобы узнать адрес"
             balloonContent: '<strong>Selected Property</strong><br/>Cost per sq.m.: {selected_flat["price_sq"]} rub',
             balloonContentHeader: 'Selected Property',
             balloonContentBody: 'Cost per sq.m.: {selected_flat["price_sq"]} rub',
