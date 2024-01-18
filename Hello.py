@@ -167,59 +167,6 @@ center_location = [selected_flat['lat'], selected_flat['lon']]
 
 # Создание HTML-код для встраивания Yandex Карты
 html_template = f"""
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-    <script crossorigin src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
-    <!-- To make the map appear, you must add your apikey -->
-    <script src="https://api-maps.yandex.ru/v3/?apikey=14a66a7c-9302-4fbb-9102-44edd5c98dc2&lang=en_US" type="text/javascript"></script>
-
-    <script
-      data-plugins="transform-modules-umd"
-      data-presets="typescript"
-      type="text/babel"
-      src="./common.ts"
-    ></script>
-    <script data-plugins="transform-modules-umd" data-presets="typescript" type="text/babel">
-      import {mapParameters, PIC_WIDTH, PIC_HEIGHT, worldSize, dataSourceProps, layerProps} from './common';
-
-      window.map = null;
-
-      main();
-      async function main() {
-        await ymaps3.ready
-        const {YMap, YMapLayer, YMapTileDataSource, YMapDefaultFeaturesLayer} = ymaps3;
-        const {Cartesian} = await ymaps3.import('@yandex/ymaps3-cartesian-projection@0.0.1');
-        const {YMapDefaultMarker} = await ymaps3.import('@yandex/ymaps3-markers@0.0.1');
-        mapParameters.projection = new Cartesian([
-          [-PIC_WIDTH / 2, PIC_HEIGHT / 2 - worldSize],
-          [worldSize - PIC_WIDTH / 2, PIC_HEIGHT / 2]
-        ]);
-        map = new YMap(
-          document.getElementById('app'),
-          mapParameters,
-          [
-            new YMapTileDataSource(dataSourceProps),
-            new YMapLayer(layerProps),
-            new YMapDefaultFeaturesLayer({}),
-            new YMapDefaultMarker({
-              coordinates: [0, 0]
-            })
-          ]
-        );
-      }
-    </script>
-
-    <!-- prettier-ignore -->
-    <style> html, body, #app { width: 100%; height: 100%; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; } .toolbar { position: absolute; z-index: 1000; top: 0; left: 0; display: flex; align-items: center; padding: 16px; } .toolbar a { padding: 16px; }  </style>
-    <link rel="stylesheet" href="./common.css" />
-  </head>
-  <body>
-    <div id="app"></div>
-  </body>
-</html>
 
 """
 
