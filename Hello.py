@@ -108,7 +108,6 @@ profit = expected_sale_price - total_expenses
 def example():
     dash_1 = st.container()
     dash_2 = st.container()
-    style_metric_cards(border_left_color="#DBF227")
 
 with dash_1:
     col1, col2, col3, col4 = st.columns(4)
