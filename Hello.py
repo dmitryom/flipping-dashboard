@@ -189,30 +189,21 @@ html_template = f"""
 
       main();
       async function main() {
-        // Waiting for all api elements to be loaded
         await ymaps3.ready;
         const {YMap, YMapLayer, YMapTileDataSource, YMapDefaultFeaturesLayer} = ymaps3;
         const {Cartesian} = await ymaps3.import('@yandex/ymaps3-cartesian-projection@0.0.1');
         const {YMapDefaultMarker} = await ymaps3.import('@yandex/ymaps3-markers@0.0.1');
-
-        // We set as a projection Cartesian. With this calculation, the center of the image will lie in the coordinates [0, 0].
         mapParameters.projection = new Cartesian([
           [-PIC_WIDTH / 2, PIC_HEIGHT / 2 - worldSize],
           [worldSize - PIC_WIDTH / 2, PIC_HEIGHT / 2]
         ]);
         map = new YMap(
-          // Pass the link to the HTMLElement of the container
           document.getElementById('app'),
-          // Pass the map initialization parameters with the cartesian projection
           mapParameters,
           [
-            // Adding our own data source
             new YMapTileDataSource(dataSourceProps),
-            // Adding a layer that will display data from `dataSource`
             new YMapLayer(layerProps),
-            // Adding a geo object data source to add a marker to the map
             new YMapDefaultFeaturesLayer({}),
-            // Adding a marker to the center of the map
             new YMapDefaultMarker({
               coordinates: [0, 0]
             })
