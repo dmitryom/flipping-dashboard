@@ -166,10 +166,53 @@ folium_static(m, width=1000, height=600)
 center_location = [selected_flat['lat'], selected_flat['lon']]
 
 # Создание HTML-код для встраивания Yandex Карты
-html_template = f"""
+import streamlit as st
+import streamlit.components.v1 as components
 
+# Define your Yandex API key
+YOUR_APIKEY = "14a66a7c-9302-4fbb-9102-44edd5c98dc2"
+
+# Define the initial location for the map
+LOCATION = [55.751244, 37.618423]  # Example: Coordinates of Moscow
+
+# Create the HTML for the Yandex Map
+yandex_map_html = f"""
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <script src="https://api-maps.yandex.ru/2.1/?apikey={YOUR_APIKEY}&lang=en_US" type="text/javascript"></script>
+    <style>
+      html, body, #app {{
+        width: 100%; height: 100%; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;
+      }}
+      .toolbar {{
+        position: absolute; z-index: 1000; top: 0; left: 0; display: flex; align-items: center; padding: 16px;
+      }}
+      .toolbar a {{
+        padding: 16px;
+      }}
+    </style>
+  </head>
+  <body>
+    <div id="app" style="width: 100%; height: 600px;"></div>
+    <script>
+      ymaps.ready(init);
+      function init() {{
+        var map = new ymaps.Map('app', {{
+          center: {LOCATION},
+          zoom: 10
+        }});
+        // You can add more features and controls to the map here.
+      }}
+    </script>
+  </body>
+</html>
 """
 
+# Display the map in the Streamlit app
+components.html(yandex_map_html, height=600)
 def generate_placemarks_js(competitors_data):
     js = ""
     for index, flat in competitors_data.iterrows():
