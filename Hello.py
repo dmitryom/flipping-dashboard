@@ -53,7 +53,12 @@ renovation_cost_sq = st.sidebar.number_input('Стоимость ремонта 
 # Расчет комиссии агента
 agent_commission = st.sidebar.number_input('Стоимость комиссии агента:', 100000 )
 
+<<<<<<< HEAD
+
+# Вывод адреса и района выбранной квартиры
+=======
 # Вывод адреса и района выбранного объекта недвижимости
+>>>>>>> e42d23a3274c33819ad6ecd0ff9d6d6b8a86a547
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'{selected_flat["city"]}')
 st.title(f'🏠 {selected_flat["street"]}, {selected_flat["address"]}')
@@ -212,9 +217,8 @@ yandex_map_html = f"""
 
         // Add a marker for the selected property with red balloon
         var selectedMarker = new ymaps.Placemark([ {location_yandex_map[0]}, {location_yandex_map[1]} ], {{
-            iconContent: 'Щелкни по мне правой кнопкой мыши!'},
-            {preset: "islands#redStretchyIcon"},
-            iconContent: "Узнать адрес",
+            iconContent: 'Щелкни по мне правой кнопкой мыши!',
+            preset: 'islands#redStretchyIcon',
             preset: 'islands#darkGreenStretchyIcon',
             balloonContent: '<strong>Selected Property</strong><br/>Cost per sq.m.: {selected_flat["price_sq"]} rub',
             balloonContentHeader: 'Selected Property',
