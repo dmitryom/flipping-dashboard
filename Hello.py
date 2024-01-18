@@ -111,7 +111,7 @@ def example():
     col2.metric("🚌 Индекс транспортной доступности", "5", "10")
     col3.metric("📍 Индекс доступности инфраструктуры", "6", "10")
     col4.metric("📊 Тренд", "4%", "100%")
-    style_metric_cards(border_left_color="#DBF227")
+    style_metric_cards()
 
 
 col1, col2, col3, col4 = st.columns(4)
