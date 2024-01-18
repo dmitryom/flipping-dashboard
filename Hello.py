@@ -189,7 +189,7 @@ html_template = f"""
 
       main();
       async function main() {
-        await ymaps3.ready;
+        await ymaps3.ready
         const {YMap, YMapLayer, YMapTileDataSource, YMapDefaultFeaturesLayer} = ymaps3;
         const {Cartesian} = await ymaps3.import('@yandex/ymaps3-cartesian-projection@0.0.1');
         const {YMapDefaultMarker} = await ymaps3.import('@yandex/ymaps3-markers@0.0.1');
