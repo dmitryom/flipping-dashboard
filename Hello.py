@@ -21,6 +21,44 @@ from streamlit_folium import st_folium
 from geopy.distance import geodesic
 import matplotlib.pyplot as plt
 import seaborn as sns
+from streamlit_extras.metric_cards import style_metric_cards
+
+def style_metric_cards(
+    color:str = "#232323",
+    background_color: str = "#FFF",
+    border_size_px: int = 1,
+    border_color: str = "#CCC",
+    border_radius_px: int = 5,
+    border_left_color: str = "#9AD8E1",
+    box_shadow: bool = True,
+):
+
+    box_shadow_str = (
+        "box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;"
+        if box_shadow
+        else "box-shadow: none !important;"
+    )
+    st.markdown(
+        f"""
+        <style>
+            div[data-testid="metric-container"] {{
+                background-color: {background_color};
+                border: {border_size_px}px solid {border_color};
+                padding: 5% 5% 5% 10%;
+                border-radius: {border_radius_px}px;
+                border-left: 0.5rem solid {border_left_color} !important;
+                color: {color};
+                {box_shadow_str}
+            }}
+             div[data-testid="metric-container"] p {{
+              color: {color};
+            }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 # Установка параметров страницы для отображения во весь экран
 st.set_page_config(layout='wide')
 LOGGER = get_logger(__name__)
@@ -63,11 +101,15 @@ expected_sale_price = selected_flat['predicted_price']
 total_expenses = selected_flat['price_sq'] + renovation_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
+
+
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("🔄 ROI","20%", "4%")
 col2.metric("🚌 Индекс транспортной доступности", "5", "10")
 col3.metric("📍 Индекс доступности инфраструктуры", "6", "10")
 col4.metric("📊 Тренд", "4%", "100%")
+style_metric_cards(border_left_color="#DBF227")
+
 
 col1, col2, col3, col4 = st.columns(4)
 col1.metric(
