@@ -146,25 +146,7 @@ with tab2:
     competitors_data['Price Difference'] = competitors_data['price_sq'] - selected_flat['price_sq']
     # Display the table with the new column
     st.dataframe(competitors_data[['city','street','address', 'rooms','area', 'kitchen_area','renovation','floor','house_floors','house_wall_type','build_year','time_on_foot_to_subway','Distance (meters)','price_sq','bargainTerms.price','Price Difference','Selected']].reset_index(drop=True))
-    st.dataframe(competitors_data.rename(columns={
-        'city': 'Город',
-        'street': 'Улица',
-        'address': 'Адрес',
-        'rooms': 'Комнаты',
-        'area': 'Площадь',
-        'kitchen_area': 'Площадь кухни',
-        'renovation': 'Ремонт',
-        'floor': 'Этаж',
-        'house_floors': 'Этажей в доме',
-        'house_wall_type': 'Материал стен',
-        'build_year': 'Год постройки',
-        'time_on_foot_to_subway': 'Время до метро пешком',
-        'Distance (meters)': 'Расстояние (метры)',
-        'price_sq': 'Цена за кв. м',
-        'bargainTerms.price': 'Цена за объект',
-        'Price Difference': 'Разница в цене',
-        'Selected': 'Выбрано'
-    }))
+ 
 with tab1:
     # Карта конкурентов в радиусе 1500 метров
     st.subheader('Карта конкурентов в радиусе 1500 метров')
