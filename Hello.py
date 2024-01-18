@@ -23,6 +23,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from streamlit_extras.metric_cards import style_metric_cards
 
+
+# Установка параметров страницы для отображения во весь экран
+st.set_page_config(layout='wide')
+LOGGER = get_logger(__name__)
+
+
 def style_metric_cards(
     color:str = "#232323",
     background_color: str = "#FFF",
@@ -61,9 +67,8 @@ def style_metric_cards(
 dash_1 = st.container()
 dash_2 = st.container()
 
-# Установка параметров страницы для отображения во весь экран
-st.set_page_config(layout='wide')
-LOGGER = get_logger(__name__)
+
+
 # Загрузка данных из CSV___
 @st.cache
 def load_data():
