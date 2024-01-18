@@ -111,7 +111,7 @@ col1.metric("🔄 ROI","20%", "4%")
 col2.metric("🚌 Индекс транспортной доступности", "5", "10")
 col3.metric("📍 Индекс доступности инфраструктуры", "6", "10")
 col4.metric("📊 Тренд", "4%", "100%")
-style_metric_cards(background_color="#f0f0f0", border_color="#00ff00", box_shadow=False)
+style_metric_cards(border_left_color="#DBF227")
 
 
 col1, col2, col3, col4 = st.columns(4)
