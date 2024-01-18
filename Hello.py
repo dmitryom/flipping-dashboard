@@ -167,13 +167,10 @@ with tab2:
         }
     competitors_data = competitors_data.rename(columns=translated_columns)
 
-    st.dataframe(competitors_data[
-                      ['Город', 'Улица', 'Адрес', 'Комнаты', 'Общая площадь', 'Площадь кухни', 'Ремонт', 'Этаж',
-                       'Этажей в доме', 'Материал дома', 'Год постройки', 'Время пешком до метро', 'Расстояние (метры)',
-                       'Цена за кв.м.', 'Цена входа', 'Разница в цене', 'Выбрано']].reset_index(drop=True))
+    #st.dataframe(competitors_data[['Город', 'Улица', 'Адрес', 'Комнаты', 'Общая площадь', 'Площадь кухни', 'Ремонт', 'Этаж','Этажей в доме', 'Материал дома', 'Год постройки', 'Время пешком до метро', 'Расстояние (метры)','Цена за кв.м.', 'Цена входа', 'Разница в цене', 'Выбрано']].reset_index(drop=True))
 
 
-    #st.dataframe(competitors_data[['city','street','address', 'rooms','area', 'kitchen_area','renovation','floor','house_floors','house_wall_type','build_year','time_on_foot_to_subway','Distance (meters)','price_sq','bargainTerms.price','Price Difference','Selected']].reset_index(drop=True))
+    st.dataframe(competitors_data[['city','street','address', 'rooms','area', 'kitchen_area','renovation','floor','house_floors','house_wall_type','build_year','time_on_foot_to_subway','Distance (meters)','price_sq','bargainTerms.price','Price Difference','Selected']].reset_index(drop=True))
 
 
 with tab1:
