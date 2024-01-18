@@ -22,6 +22,7 @@ from geopy.distance import geodesic
 import matplotlib.pyplot as plt
 import seaborn as sns
 from streamlit_extras.metric_cards import style_metric_cards
+import streamlit.components.v1 as components
 
 
 # Установка параметров страницы для отображения во весь экран
@@ -159,3 +160,66 @@ for index, flat in competitors_data.iterrows():
 
 # Отображение карты
 folium_static(m, width=1000, height=600)
+
+
+# Название и координаты для центра карты
+center_location = [selected_flat['lat'], selected_flat['lon']]
+
+# Создание HTML-код для встраивания Yandex Карты
+html_template = f"""
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Карта конкурентов в радиусе 1500 метров</title>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=14a66a7c-9302-4fbb-9102-44edd5c98dc2&lang=ru_RU" type="text/javascript"></script>
+    <style>
+        html, body, #map {{
+            width: 100%; height: 100%; padding: 0; margin: 0;
+        }}
+    </style>
+</head>
+<body>
+<div id="map" style="width: 1000px; height: 600px"></div>
+<script>
+ymaps.ready(init);
+function init() {{
+    var myMap = new ymaps.Map("map", {{
+        center: {center_location},
+        zoom: 14
+    }});
+
+    // Добавляем метки на карту
+    {generate_placemarks_js(competitors_data)}
+}}
+</script>
+</body>
+</html>
+"""
+
+def generate_placemarks_js(competitors_data):
+    js = ""
+    for index, flat in competitors_data.iterrows():
+        # Определение цвета маркера
+        color = 'red' if flat['id'] == selected_flat_id else 'blue'
+        # Добавление маркера на карту
+        js += f"""
+        var placemark = new ymaps.Placemark([{flat['lat']}, {flat['lon']}], {{
+            hintContent: '{flat['city']}, {flat['price_sq']} руб/м²',
+            balloonContent: '{flat['city']}, {flat['price_sq']} руб/м²'
+        }}, {{
+            iconColor: '{color}'
+        }});
+        myMap.geoObjects.add(placemark);
+        """
+    return js
+
+# Вызываем функцию для генерации JavaScript-кода меток
+placemarks_js = generate_placemarks_js(competitors_data)
+
+# Заменяем плейсхолдер в HTML шаблоне на реальный JavaScript код
+final_html = html_template.format(center_location=center_location, generate_placemarks_js=placemarks_js)
+
+# Отображение карты
+st.subheader('Карта конкурентов в радиусе 1500 метров')
+components.html(final_html, height=600, width=1000)
