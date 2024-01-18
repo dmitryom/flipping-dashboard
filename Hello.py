@@ -174,7 +174,7 @@ html_template = f"""
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <script crossorigin src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
     <!-- To make the map appear, you must add your apikey -->
-    <script src="https://api-maps.yandex.ru/v3/?apikey=<YOUR_APIKEY>&lang=en_US" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/v3/?apikey=14a66a7c-9302-4fbb-9102-44edd5c98dc2&lang=en_US" type="text/javascript"></script>
 
     <script
       data-plugins="transform-modules-umd"
