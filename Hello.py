@@ -146,7 +146,7 @@ with tab2:
     competitors_data['Price Difference'] = competitors_data['price_sq'] - selected_flat['price_sq']
     # Display the table with the new column
     st.dataframe(competitors_data[['city','street','address', 'rooms','area', 'kitchen_area','renovation','floor','house_floors','house_wall_type','build_year','time_on_foot_to_subway','Distance (meters)','price_sq','bargainTerms.price','Price Difference','Selected']].reset_index(drop=True))
- 
+
 with tab1:
     # Карта конкурентов в радиусе 1500 метров
     st.subheader('Карта конкурентов в радиусе 1500 метров')
