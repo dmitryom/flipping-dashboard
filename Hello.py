@@ -53,12 +53,7 @@ renovation_cost_sq = st.sidebar.number_input('Стоимость ремонта 
 # Расчет комиссии агента
 agent_commission = st.sidebar.number_input('Стоимость комиссии агента:', 100000 )
 
-<<<<<<< HEAD
-
-# Вывод адреса и района выбранной квартиры
-=======
 # Вывод адреса и района выбранного объекта недвижимости
->>>>>>> e42d23a3274c33819ad6ecd0ff9d6d6b8a86a547
 selected_flat = data[data['id'] == selected_flat_id].squeeze()
 st.subheader(f'{selected_flat["city"]}')
 st.title(f'🏠 {selected_flat["street"]}, {selected_flat["address"]}')
