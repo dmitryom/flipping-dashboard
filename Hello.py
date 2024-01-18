@@ -106,10 +106,6 @@ profit = expected_sale_price - total_expenses
 
 # components
 def example():
-    dash_1 = st.container()
-    dash_2 = st.container()
-
-with dash_1:
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("🔄 ROI","20%", "4%")
     col2.metric("🚌 Индекс транспортной доступности", "5", "10")
