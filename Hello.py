@@ -54,8 +54,6 @@ agent_commission = st.sidebar.number_input('Стоимость комиссии 
 # Вывод информации о выбранной квартире
 selected_flat = filtered_data[filtered_data['id'] == selected_flat_id].squeeze()
 st.header(f"{selected_flat['city']}, {selected_flat['street']}, {selected_flat['address']}")
-st.write(f"**Этаж:** {selected_flat['floor']} из {selected_flat['house_floors']}")
-st.write(f"**Площадь:** {selected_flat['area']} м²")
 
 # Расчет затрат на ремонт и общую стоимость
 refresh_cost = selected_flat['area'] * refresh_cost_sq
@@ -87,6 +85,8 @@ col3.metric("💸 Прибыль:", profit_display)
 # Отображение характеристика квартиры
 st.subheader('Характеристики квартиры')
 st.write(f"**Комнат:** {selected_flat['rooms']}")
+st.write(f"**Этаж:** {selected_flat['floor']} из {selected_flat['house_floors']}")
+st.write(f"**Площадь:** {selected_flat['area']} м²")
 st.write(f"**Жилая площадь:** {selected_flat['all_data.livingArea']} м²")
 st.write(f"**Площадь кухни:** {selected_flat['kitchen_area']} м²")
 st.write(f"**Санузел:** {selected_flat['bathroom_type']}")
