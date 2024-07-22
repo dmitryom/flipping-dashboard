@@ -13,7 +13,6 @@
 # limitations under the License.
 
 # Импорт необходимых библиотек
-# Импорт необходимых библиотек
 import streamlit as st
 from streamlit.logger import get_logger
 import pandas as pd
@@ -40,29 +39,26 @@ data = load_data()
 # Заголовок приложения
 st.title('📊 Анализ инвестиционного проекта недвижимости')
 
-# Сайдбар для выбора города
+# Сайдбар для выбора города и квартиры
+st.sidebar.header('Фильтры')
+
+
 selected_city = st.sidebar.selectbox('Выберите город', data['city'].unique())
 filtered_data = data[data['city'] == selected_city]
 selected_flat_id = st.sidebar.selectbox('Выберите квартиру', filtered_data['id'])
 
 # Допущения
-renovation_cost_sq = st.sidebar.number_input('Стоимость ремонта за квадратный метр:', 35000 )
-# Расчет комиссии агента
-agent_commission = st.sidebar.number_input('Стоимость комиссии агента:', 100000 )
+refresh_cost_sq = st.sidebar.number_input('Стоимость ремонта за квадратный метр:', 35000)
+agent_commission = st.sidebar.number_input('Стоимость комиссии агента:', 100000)
 
-# Вывод адреса и района выбранного объекта недвижимости
-selected_flat = data[data['id'] == selected_flat_id].squeeze()
-st.subheader(f'{selected_flat["city"]}')
-st.title(f'🏠 {selected_flat["street"]}, {selected_flat["address"]}')
-#{selected_flat["floor"]} ком.кв., {selected_flat["city"]}, Площадь: {selected_flat["area"]}
-st.write(f'Ⓜ️ Метро: {selected_flat["all_data.geo.undergrounds[0].name"]}, {selected_flat["all_data.geo.undergrounds[0].time"]} мин.')
-st.write(f'{selected_flat["all_data.geo.address[2].title"]}, {selected_flat["all_data.geo.address[1].title"]}')
-# Расчет затрат на ремонт
-renovation_cost = selected_flat['area'] * renovation_cost_sq
-# Ожидаемая стоимость продажи (может быть заменена на реальные данные)
+# Вывод информации о выбранной квартире
+selected_flat = filtered_data[filtered_data['id'] == selected_flat_id].squeeze()
+st.header(f"{selected_flat['city']}, {selected_flat['street']}, {selected_flat['address']}")
+
+# Расчет затрат на ремонт и общую стоимость
+refresh_cost = selected_flat['area'] * refresh_cost_sq
 expected_sale_price = selected_flat['predicted_price']
-# Расчет общих затрат и прибыли
-total_expenses = selected_flat['price_sq'] + renovation_cost + agent_commission
+total_expenses = selected_flat['price_sq'] + refresh_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
 # Отображение метрик
@@ -73,84 +69,59 @@ col3.metric("📍 Индекс доступности инфраструктур
 col4.metric("📊 Тренд", "4%", "100%")
 style_metric_cards()
 
-
-col1, col2, col3, col4 = st.columns(4)
-col1.metric(
-    "💰 Цена входа:",
-    f'{selected_flat["bargainTerms.price"]} руб.',
-    help="Цена в объявлении",
-    )
-col2.metric(
-    "💸 Цена выхода потенциальная:",
-    f'{expected_sale_price * selected_flat["area"]} руб.',
-    help="Цена выхода по оценке искусственного интеллекта (ИИ)",
-    )
-col3.metric(
-    "💸 Прибль:",
-    f'{profit} руб.',
-    help="Прибль",
-    )
-
-
-
-# Отображение характеристик выбранного объекта недвижимости
-selected_flat = data[data['id'] == selected_flat_id].squeeze()
+# Отражение финансовых показателей
+st.subheader('Финансовые показатели')
 col1, col2, col3 = st.columns(3)
-with col1:
-    st.subheader(f'1. Характеристики')
-    st.write(f'* Комнат: {selected_flat["rooms"]}')
-    st.write(f'* Общая площадь: {selected_flat["area"]}')
-    st.write(f'* Жилая площадь: {selected_flat["all_data.livingArea"]}')
-    st.write(f'* Площадь кухни: {selected_flat["kitchen_area"]}')
-    st.write(f'* Этаж: {selected_flat["floor"]} из {selected_flat["house_floors"]}')
-    st.write(f'* Санузел: {selected_flat["bathroom_type"]}')
-    st.write(f'* Лифт: пассажирский {selected_flat["lifts"]} грузовой {selected_flat["freight_lifts"]} ')
-    st.write(f'* Материал дома: {selected_flat["house_wall_type"]}')
-    st.write(f'* Год постройки: {selected_flat["build_year"]}')
-with col2:
-    st.subheader(f'2. Финансовые показатели')
-    # Отображение результатов
-    st.write(f'* Цена входа: {selected_flat["bargainTerms.price"]} руб.')
-    st.write(f'* Цена выхода потенциальная: {expected_sale_price * selected_flat["area"]} руб.')
-    st.write(f'* Затраты на ремонт: {renovation_cost} руб.')
-    st.write(f'* Комиссия агента: {agent_commission} руб.')
-    st.write(f'* Общие затраты: {total_expenses} руб.')
-    st.write(f'* Прибыль: {profit} руб.')
 
-st.subheader(f'3. Анализ стоимости объекта недвижимости')
-# График цен за квадратный метр
+# Форматируем числа и заменяем точки на запятые
+price_in = f'{selected_flat["bargainTerms.price"]:,}'.replace(",", " ").replace(".", ",") + " руб."
+price_out = f'{(expected_sale_price * selected_flat["area"]):,}'.replace(",", " ").replace(".", ",") + " руб."
+profit_display = f'{profit:,}'.replace(",", " ").replace(".", ",") + " руб."
 
+col1.metric("💰 Цена входа:", price_in)
+col2.metric("💸 Цена выхода:", price_out)
+col3.metric("💸 Прибыль:", profit_display)
 
+# Отображение характеристика квартиры
+st.subheader('Характеристики квартиры')
+st.write(f"**Комнат:** {selected_flat['rooms']}")
+st.write(f"**Этаж:** {selected_flat['floor']} из {selected_flat['house_floors']}")
+st.write(f"**Площадь:** {selected_flat['area']} м²")
+st.write(f"**Жилая площадь:** {selected_flat['all_data.livingArea']} м²")
+st.write(f"**Площадь кухни:** {selected_flat['kitchen_area']} м²")
+st.write(f"**Санузел:** {selected_flat['bathroom_type']}")
+st.write(f"**Лифт:** пассажирский {selected_flat['lifts']} грузовой {selected_flat['freight_lifts']}")
+st.write(f"**Материал дома:** {selected_flat['house_wall_type']}")
+st.write(f"**Год постройки:** {selected_flat['build_year']}")
+
+# Анализ стоимости объекта недвижимости
+st.subheader('Анализ стоимости объекта недвижимости')
+
+# Отображение таблицы конкурентов в радиусе 1500 метров
 st.markdown("---")
-tab1, tab2 = st.tabs(["Карта конкурентов в радиусе 1500 метров", "Таблица конкурентов в радиусе 1500 метров"])
-# Выберите квартиру и получите соответствующие данные
-selected_flat = data[data['id'] == selected_flat_id].squeeze()
+tab1, tab2 = st.tabs(["Карта конкурентов", "Таблица конкурентов"])
+
+competes_data = filtered_data.copy()
+competes_data['Расстояние (метры)'] = competes_data.apply(
+    lambda row: geodesic((row['lat'], row['lon']), (selected_flat['lat'], selected_flat['lon'])).meters,
+    axis=1
+)
+competes_data = competes_data[competes_data['Расстояние (метры)'] <= 1500]
+competes_data.loc[competes_data['id'] == selected_flat_id, 'Выбрано'] = "Выбранные"
+competes_data['Разница в цене'] = competes_data['price_sq'] - selected_flat['price_sq']
 
 with tab2:
-    # Таблица конкурентов в радиусе 1500 метров
-    st.subheader('Таблица конкурентов в радиусе 1500 метров')
-    # Фильтрация данных для отображения только конкурентов в радиусе 1500 метров
-    competitors_data = filtered_data.copy()
-    competitors_data['Distance (meters)'] = competitors_data.apply(
-        lambda row: geodesic((row['lat'], row['lon']), (selected_flat['lat'], selected_flat['lon'])).meters,
-        axis=1
-    )
-    competitors_data = competitors_data[competitors_data['Distance (meters)'] <= 1500]
-    # Выделение выбранного объекта недвижимости в таблице
-    competitors_data.loc[competitors_data['id'] == selected_flat_id, 'Selected'] = 'Selected'
-        # Calculate the price difference
-    competitors_data['Price Difference'] = competitors_data['price_sq'] - selected_flat['price_sq']
-    # Display the table with the new column
-    st.dataframe(competitors_data[['city','street','address', 'rooms','area', 'kitchen_area','renovation','floor','house_floors','house_wall_type','build_year','time_on_foot_to_subway','Distance (meters)','price_sq','bargainTerms.price','Price Difference','Selected']].reset_index(drop=True))
+    st.subheader('Таблица конкурентов')
+    st.dataframe(competes_data[[
+        'city', 'street', 'address', 'rooms', 'area', 'kitchen_area', 'renovation', 'floor', 'house_floors', 
+        'house_wall_type', 'build_year', 'time_on_foot_to_subway', 'Расстояние (метры)', 'price_sq', 
+        'bargainTerms.price', 'Разница в цене', 'Выбрано'
+    ]].reset_index(drop=True))
 
 with tab1:
-    # Карта конкурентов в радиусе 1500 метров
-    st.subheader('Карта конкурентов в радиусе 1500 метров')
-    m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14, tooltip=True)
-
-    # Перебор всех объектов недвижимости и добавление маркеров в радиусе 1500 метров
-    for index, flat in competitors_data.iterrows():
-        # Определение цвета маркера для выбранной объекта недвижимости
+    st.subheader('Карта конкурентов')
+    m = folium.Map(location=[selected_flat['lat'], selected_flat['lon']], zoom_start=14)
+    for index, flat in competes_data.iterrows():
         marker_color = 'red' if flat['id'] == selected_flat_id else 'blue'
         folium.Marker([flat['lat'], flat['lon']],
                       popup=f"{flat['city']}, {flat['price_sq']} руб/м²",
@@ -158,90 +129,51 @@ with tab1:
                       icon=folium.Icon(color=marker_color)).add_to(m)
     folium_static(m, width=1000, height=600)
 
+# Интеграция с Яндекс.Картами
+st.subheader('Яндекс.Карта')
+YOUR_APIKEY = "14a66a7c-9302-4fbb-9102-44edd5c98dc2"
+location_yandex_map = [selected_flat['lat'], selected_flat['lon']]
 
-    # Название и координаты для центра карты
-    center_location = [selected_flat['lat'], selected_flat['lon']]
-
-    # Создание HTML-код для встраивания Yandex Карты
-    import streamlit as st
-    import streamlit.components.v1 as components
-
-    # Define your Yandex API key
-    YOUR_APIKEY = "14a66a7c-9302-4fbb-9102-44edd5c98dc2"
-
-    # Define the initial location for the map
-    location_yandex_map = [selected_flat['lat'], selected_flat['lon']]
-
-    # Yandex Map Integration
-    st.subheader('Yandex Map Integration')
-    # Define the initial location for the map
-    location_yandex_map = [selected_flat['lat'], selected_flat['lon']]
-
-    # HTML code for Yandex Map
-    yandex_map_html = f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-        <script src="https://api-maps.yandex.ru/2.1/?apikey={YOUR_APIKEY}&lang=en_US" type="text/javascript"></script>
-        <style>
-        html, body, #app {{
-            width: 100%; height: 100%; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;
-        }}
-        .toolbar {{
-            position: absolute; z-index: 1000; top: 0; left: 0; display: flex; align-items: center; padding: 16px;
-        }}
-        .toolbar a {{
-            padding: 16px;
-        }}
-        </style>
-    </head>
-    <body>
-        <div id="app" style="width: 100%; height: 600px;"></div>
-        <script>
-        ymaps.ready(init);
-        function init() {{
-            var map = new ymaps.Map('app', {{
-            center: {location_yandex_map},
-            zoom: 13
-            }});
-
-            // Add a marker for the selected property with red balloon
-            var selectedMarker = new ymaps.Placemark([ {location_yandex_map[0]}, {location_yandex_map[1]} ], {{
-                balloonContent: '<strong>Selected Property</strong><br/>Cost per sq.m.: {selected_flat["price_sq"]} rub',
-                balloonContentHeader: 'Selected Property',
-                balloonContentBody: 'Cost per sq.m.: {selected_flat["price_sq"]} rub',
-                balloonContentFooter: 'Click for details',
-                iconColor: 'red'
-            }});
-            selectedMarker.options.set("iconColor", "red");
-            map.geoObjects.add(selectedMarker);
-
-            // Add markers for competitors
-            var competitorsData = {competitors_data[['lat', 'lon', 'id', 'price_sq']].to_json(orient='records', date_format='iso')};
-            for (var i = 0; i < competitorsData.length; i++) {{
-                var competitorMarker = new ymaps.Placemark(
-                    [competitorsData[i]['lat'], competitorsData[i]['lon']],
-                    {{
-                        balloonContent: '<strong>Competitor Property</strong><br/>Cost per sq.m.: ' + competitorsData[i]['price_sq'] + ' rub',
-                        balloonContentHeader: 'Competitor Property ' + competitorsData[i]['id'],
-                        balloonContentBody: 'Cost per sq.m.: ' + competitorsData[i]['price_sq'] + ' rub',
-                        balloonContentFooter: 'Click for details'
-                    }}
-                );
-                map.geoObjects.add(competitorMarker);
+yandex_map_html = f"""
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://api-maps.yandex.ru/2.1/?apikey={YOUR_APIKEY}&lang=ru_RU" type="text/javascript"></script>
+<style>
+html, body, #app {{ width: 100%; height: 100%; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }}
+</style>
+</head>
+<body>
+<div id="app" style="width: 100%; height: 600px;"></div>
+<script>
+ymaps.ready(init);
+function init() {{
+    var map = new ymaps.Map('app', {{ center: {location_yandex_map}, zoom: 13 }});
+    var selectedMarker = new ymaps.Placemark([{location_yandex_map[0]}, {location_yandex_map[1]}], {{
+        balloonContent: '<strong>Выбранный объект</strong><br/>Стоимость за кв.м.: {selected_flat["price_sq"]} руб',
+        iconColor: 'red'
+    }});
+    map.geoObjects.add(selectedMarker);
+    var competesData = {competes_data[['lat', 'lon', 'id', 'price_sq']].to_json(orient='records', date_format='iso')};
+    for (var i = 0; i < competesData.length; i++) {{
+        var competitorMarker = new ymaps.Placemark(
+            [competesData[i]['lat'], competesData[i]['lon']],
+            {{
+                balloonContent: '<strong>Competitor Property</strong><br/>Cost per sq.m.: ' + competesData[i]['price_sq'] + ' rub'
             }}
+        );
+        map.geoObjects.add(competitorMarker);
+    }}
+}}
+</script>
+</body>
+</html>
+"""
 
-            // You can add more features and controls to the map here.
-        }}
-        </script>
-    </body>
-    </html>
-    """
-
-    # Display the updated map in the Streamlit app
-    components.html(yandex_map_html, height=600)
+components.html(yandex_map_html, height=600)
 
 
 st.markdown(
