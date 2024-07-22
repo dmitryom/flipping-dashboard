@@ -63,9 +63,9 @@ price_in = f'{selected_flat["bargainTerms.price"]:,}'.replace(",", " ").replace(
 price_out = f'{(expected_sale_price * selected_flat["area"]):,}'.replace(",", " ").replace(".", ",") + " руб."
 profit_display = f'{profit:,}'.replace(",", " ").replace(".", ",") + " руб."
 
-col1.metric("💰 Цена входа:", price_in)
-col2.metric("💸 Цена выхода:", price_out)
-col3.metric("💸 Прибыль:", profit_display)
+col1.metric("💰 **Цена входа:**", price_in)
+col2.metric("💸 **Цена выхода:**", price_out)
+col3.metric("💸 **Прибыль:**", profit_display)
 
 # Отображение характеристика квартиры
 st.subheader('Характеристики квартиры')
