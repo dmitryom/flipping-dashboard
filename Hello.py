@@ -46,6 +46,19 @@ expected_sale_price = selected_flat['predicted_price']
 total_expenses = selected_flat['price_sq'] + refresh_cost + agent_commission
 profit = expected_sale_price - total_expenses
 
+# Форматируем числа и заменяем точки на запятые
+price_in = f'{selected_flat["bargainTerms.price"]:,}'.replace(",", " ").replace(".", ",") + " руб."
+price_out = f'{(expected_sale_price * selected_flat["area"]):,}'.replace(",", " ").replace(".", ",") + " руб."
+profit_display = f'{profit:,}'.replace(",", " ").replace(".", ",") + " руб."
+
+# Отражение финансовых показателей
+st.subheader('Финансовые показатели')
+col1, col2, col3 = st.columns(3)
+
+col1.metric("💰 **Цена входа:**", price_in)
+col2.metric("💸 **Цена выхода:**", price_out)
+col3.metric("💸 **Прибыль:**", profit_display)
+
 # Отображение метрик
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("🔄 **ROI**", "20%", "4%")
@@ -53,19 +66,6 @@ col2.metric("🚌 **Индекс транспортной доступности
 col3.metric("📍 **Индекс доступности инфраструктуры**", "6", "10")
 col4.metric("📊 **Тренд**", "4%", "100%")
 style_metric_cards()
-
-# Отражение финансовых показателей
-st.subheader('Финансовые показатели')
-col1, col2, col3 = st.columns(3)
-
-# Форматируем числа и заменяем точки на запятые
-price_in = f'{selected_flat["bargainTerms.price"]:,}'.replace(",", " ").replace(".", ",") + " руб."
-price_out = f'{(expected_sale_price * selected_flat["area"]):,}'.replace(",", " ").replace(".", ",") + " руб."
-profit_display = f'{profit:,}'.replace(",", " ").replace(".", ",") + " руб."
-
-col1.metric("💰 **Цена входа:**", price_in)
-col2.metric("💸 **Цена выхода:**", price_out)
-col3.metric("💸 **Прибыль:**", profit_display)
 
 # Отображение характеристика квартиры
 st.subheader('Характеристики квартиры')
