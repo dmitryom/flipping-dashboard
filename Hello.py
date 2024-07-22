@@ -68,7 +68,7 @@ style_metric_cards()
 
 # Отображение характеристика квартиры
 st.subheader('Характеристики квартиры')
-st.write(f"**Комнат:** {selected_flat['rooms']}")
+st.write(f"**Комнат:** ***{selected_flat['rooms']}***")
 st.write(f"**Этаж:** {selected_flat['floor']} из {selected_flat['house_floors']}")
 st.write(f"**Площадь:** {selected_flat['area']} м²")
 st.write(f"**Жилая площадь:** {selected_flat['all_data.livingArea']} м²")
